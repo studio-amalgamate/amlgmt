@@ -6,7 +6,7 @@ const Home = () => {
   const featuredImages = getFeaturedImages();
 
   return (
-    <div className="ml-64 h-screen">
+    <div className="lg:ml-64 h-screen">
       <Slideshow media={featuredImages} projectInfo={null} />
     </div>
   );

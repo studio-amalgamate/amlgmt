@@ -9,14 +9,14 @@ const Project = () => {
 
   if (!project) {
     return (
-      <div className="ml-64 h-screen flex items-center justify-center">
+      <div className="lg:ml-64 h-screen flex items-center justify-center px-4">
         <p className="text-xl opacity-50">Project not found</p>
       </div>
     );
   }
 
   return (
-    <div className="ml-64 h-screen">
+    <div className="lg:ml-64 h-screen">
       <Slideshow
         media={project.media}
         projectInfo={{

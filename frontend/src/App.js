@@ -8,6 +8,7 @@ import Project from './pages/Project';
 
 function App() {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Load Google Fonts
@@ -25,7 +26,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Sidebar onInfoClick={() => setIsInfoOpen(true)} />
+        <Sidebar 
+          onInfoClick={() => setIsInfoOpen(true)} 
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+        />
         <InfoModal isOpen={isInfoOpen} onClose={() => setIsInfoOpen(false)} />
         <Routes>
           <Route path="/" element={<Home />} />

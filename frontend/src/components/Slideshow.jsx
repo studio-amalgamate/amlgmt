@@ -5,6 +5,16 @@ const Slideshow = ({ media, projectInfo }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cursorSide, setCursorSide] = useState('left');
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Sort media so videos come first
   const sortedMedia = [...media].sort((a, b) => {
@@ -14,6 +24,7 @@ const Slideshow = ({ media, projectInfo }) => {
   });
 
   const handleMouseMove = (e) => {
+    if (isMobile) return;
     const { clientX, currentTarget } = e;
     const { width } = currentTarget.getBoundingClientRect();
     const midpoint = width / 2;
@@ -21,6 +32,7 @@ const Slideshow = ({ media, projectInfo }) => {
   };
 
   const handleClick = () => {
+    if (isMobile) return;
     if (cursorSide === 'right') {
       nextSlide();
     } else {
@@ -46,13 +58,13 @@ const Slideshow = ({ media, projectInfo }) => {
     <div className="relative h-screen w-full">
       {/* Main slideshow area */}
       <div
-        className="h-full w-full flex items-center justify-center overflow-hidden"
+        className="h-full w-full flex items-center justify-center overflow-hidden px-4 md:px-8"
         onMouseMove={handleMouseMove}
         onClick={handleClick}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         style={{
-          cursor: isHovering
+          cursor: !isMobile && isHovering
             ? cursorSide === 'right'
               ? 'e-resize'
               : 'w-resize'
@@ -63,13 +75,13 @@ const Slideshow = ({ media, projectInfo }) => {
           <img
             src={currentMedia.url}
             alt={currentMedia.alt}
-            className="max-h-[85vh] w-auto object-contain"
+            className="max-h-[70vh] md:max-h-[85vh] w-auto max-w-full object-contain"
             style={{ userSelect: 'none', pointerEvents: 'none' }}
           />
         ) : (
           <video
             src={currentMedia.url}
-            className="max-h-[85vh] w-auto object-contain"
+            className="max-h-[70vh] md:max-h-[85vh] w-auto max-w-full object-contain"
             autoPlay
             muted
             loop
@@ -79,20 +91,40 @@ const Slideshow = ({ media, projectInfo }) => {
         )}
       </div>
 
-      {/* Project info overlay */}
+      {/* Mobile navigation arrows */}
+      {isMobile && (
+        <>
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal bg-white bg-opacity-80 rounded-full p-2 shadow-lg"
+            aria-label="Previous"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-charcoal bg-white bg-opacity-80 rounded-full p-2 shadow-lg"
+            aria-label="Next"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </>
+      )}
+
+      {/* Project info overlay - changed to sans-serif */}
       {projectInfo && (
-        <div className="absolute bottom-8 left-8 text-charcoal">
-          <h2 className="text-2xl font-normal mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+        <div className="absolute bottom-6 left-4 md:bottom-8 md:left-8 text-charcoal">
+          <h2 className="text-xl md:text-2xl font-normal mb-2">
             {projectInfo.title}
           </h2>
-          <p className="text-sm opacity-70">
+          <p className="text-xs md:text-sm opacity-70">
             {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
           </p>
         </div>
       )}
 
       {/* Slide counter */}
-      <div className="absolute bottom-8 right-8 text-sm opacity-50">
+      <div className="absolute bottom-6 right-4 md:bottom-8 md:right-8 text-xs md:text-sm opacity-50">
         {currentIndex + 1} / {sortedMedia.length}
       </div>
     </div>
