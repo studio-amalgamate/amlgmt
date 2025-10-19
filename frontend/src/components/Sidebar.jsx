@@ -79,53 +79,56 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
       {/* Mobile Menu - Full Screen White Popup */}
       {isMobileMenuOpen && (
         <div 
-          className="lg:hidden fixed inset-0 z-40 flex items-center justify-center p-4"
+          className="lg:hidden fixed inset-0 z-40 flex flex-col"
           style={{
             backgroundColor: 'rgba(255, 255, 255, 0.85)',
             backdropFilter: 'blur(12px)',
             transition: 'background-color 0.5s ease'
           }}
-          onClick={() => setIsMobileMenuOpen(false)}
         >
-          <button
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="absolute top-6 right-6 text-charcoal hover:opacity-70 transition-opacity"
-            aria-label="Close"
-          >
-            <X size={32} strokeWidth={1.5} />
-          </button>
+          <div className="flex items-center justify-between p-6">
+            <h1 className="text-xl font-normal tracking-wide uppercase">
+              Your Name
+            </h1>
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-charcoal hover:opacity-70 transition-opacity"
+              aria-label="Close"
+            >
+              <X size={32} strokeWidth={1.5} />
+            </button>
+          </div>
 
-          <div 
-            className="max-w-4xl w-full px-8 overflow-y-auto max-h-[80vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <nav className="space-y-5 text-charcoal">
-              {mockProjects.map((project) => (
-                <Link
-                  key={project.id}
-                  to={`/project/${project.id}`}
-                  onClick={handleProjectClick}
-                  className={
-                    `block text-lg font-normal tracking-wide transition-opacity duration-200 ${
-                      location.pathname === `/project/${project.id}`
-                        ? 'opacity-100'
-                        : 'opacity-50 hover:opacity-100'
-                    }`
-                  }
-                >
-                  {project.title.toUpperCase()}
-                </Link>
-              ))}
+          <div className="flex-grow flex flex-col justify-between px-8 py-8 overflow-y-auto">
+            <div className="flex-grow flex items-center">
+              <nav className="space-y-5 text-charcoal w-full">
+                {mockProjects.map((project) => (
+                  <Link
+                    key={project.id}
+                    to={`/project/${project.id}`}
+                    onClick={handleProjectClick}
+                    className={
+                      `block text-lg font-normal tracking-wide transition-opacity duration-200 ${
+                        location.pathname === `/project/${project.id}`
+                          ? 'opacity-100'
+                          : 'opacity-50 hover:opacity-100'
+                      }`
+                    }
+                  >
+                    {project.title.toUpperCase()}
+                  </Link>
+                ))}
+              </nav>
+            </div>
 
-              <div className="pt-8">
-                <button
-                  onClick={handleInfoClick}
-                  className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
-                >
-                  INFORMATION
-                </button>
-              </div>
-            </nav>
+            <div className="pt-8 mt-8">
+              <button
+                onClick={handleInfoClick}
+                className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
+              >
+                INFORMATION
+              </button>
+            </div>
           </div>
         </div>
       )}

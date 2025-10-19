@@ -25,10 +25,11 @@ const Slideshow = ({ media, projectInfo }) => {
 
   const handleMouseMove = (e) => {
     if (isMobile) return;
-    const { clientX, currentTarget } = e;
-    const { width } = currentTarget.getBoundingClientRect();
-    const midpoint = width / 2;
-    setCursorSide(clientX > midpoint ? 'right' : 'left');
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const containerWidth = rect.width;
+    const midpoint = containerWidth / 2;
+    setCursorSide(x > midpoint ? 'right' : 'left');
   };
 
   const handleClick = () => {

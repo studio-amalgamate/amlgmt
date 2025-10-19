@@ -23,6 +23,11 @@ function App() {
     document.head.appendChild(link2);
   }, []);
 
+  const handleBack = () => {
+    setIsInfoOpen(false);
+    setIsMobileMenuOpen(true);
+  };
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -31,7 +36,11 @@ function App() {
           isMobileMenuOpen={isMobileMenuOpen}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
         />
-        <InfoModal isOpen={isInfoOpen} onClose={() => setIsInfoOpen(false)} />
+        <InfoModal 
+          isOpen={isInfoOpen} 
+          onClose={() => setIsInfoOpen(false)}
+          onBack={window.innerWidth < 1024 ? handleBack : null}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/project/:id" element={<Project />} />

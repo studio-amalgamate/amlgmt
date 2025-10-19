@@ -1,8 +1,10 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { X, ArrowLeft } from 'lucide-react';
 
-const InfoModal = ({ isOpen, onClose }) => {
+const InfoModal = ({ isOpen, onClose, onBack }) => {
   if (!isOpen) return null;
+
+  const isMobile = window.innerWidth < 1024;
 
   return (
     <div 
@@ -21,6 +23,20 @@ const InfoModal = ({ isOpen, onClose }) => {
       >
         <X size={32} strokeWidth={1.5} />
       </button>
+
+      {/* Back button for mobile */}
+      {isMobile && onBack && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onBack();
+          }}
+          className="absolute top-6 left-6 text-white hover:opacity-70 transition-opacity flex items-center gap-2"
+          aria-label="Back"
+        >
+          <ArrowLeft size={28} strokeWidth={1.5} />
+        </button>
+      )}
 
       <div 
         className="max-w-4xl px-8 md:px-16 text-white overflow-y-auto max-h-[90vh]"
