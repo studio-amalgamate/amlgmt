@@ -96,10 +96,10 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           </button>
 
           <div 
-            className="max-w-4xl px-8 overflow-y-auto max-h-[80vh]"
+            className="max-w-4xl w-full px-8 overflow-y-auto max-h-[80vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            <nav className="space-y-4">
+            <nav className="space-y-5 text-charcoal">
               {mockProjects.map((project) => (
                 <Link
                   key={project.id}
@@ -117,7 +117,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                 </Link>
               ))}
 
-              <div className="pt-8 mt-8">
+              <div className="pt-8">
                 <button
                   onClick={handleInfoClick}
                   className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
