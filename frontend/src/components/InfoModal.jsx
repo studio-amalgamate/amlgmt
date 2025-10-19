@@ -8,8 +8,9 @@ const InfoModal = ({ isOpen, onClose }) => {
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
       style={{
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
-        backdropFilter: 'blur(12px)'
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        backdropFilter: 'blur(12px)',
+        transition: 'background-color 0.5s ease'
       }}
       onClick={onClose}
     >

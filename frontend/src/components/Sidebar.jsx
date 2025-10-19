@@ -21,36 +21,36 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="lg:hidden fixed top-6 left-6 z-50 text-charcoal"
-        aria-label="Toggle menu"
-      >
-        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-      </button>
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6 bg-white">
+        <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
+          <h1 className="text-xl font-normal tracking-wide uppercase">
+            Your Name
+          </h1>
+        </Link>
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="text-charcoal"
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
 
-      {/* Sidebar */}
-      <aside
-        className={
-          `fixed left-0 top-0 h-screen w-64 bg-white overflow-y-auto z-40 transition-transform duration-300 ${
-            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          } lg:translate-x-0`
-        }
-      >
-        <div className="p-8">
-          <Link to="/" className="block mb-12" onClick={handleProjectClick}>
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:block fixed left-0 top-0 h-screen w-64 bg-white overflow-y-auto z-40">
+        <div className="p-8 h-full flex flex-col">
+          <Link to="/" className="block mb-12">
             <h1 className="text-xl font-normal tracking-wide uppercase">
               Your Name
             </h1>
           </Link>
 
-          <nav className="space-y-3">
+          <nav className="space-y-3 flex-grow">
             {mockProjects.map((project) => (
               <Link
                 key={project.id}
                 to={`/project/${project.id}`}
-                onClick={handleProjectClick}
                 className={
                   `block text-sm font-normal tracking-wide transition-opacity duration-200 ${
                     location.pathname === `/project/${project.id}`
@@ -64,8 +64,8 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
             ))}
           </nav>
 
-          {/* Information moved to bottom */}
-          <div className="mt-16">
+          {/* Information at the absolute bottom */}
+          <div className="pt-8 mt-auto">
             <button
               onClick={handleInfoClick}
               className="block text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
@@ -76,12 +76,58 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
         </div>
       </aside>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Menu - Full Screen White Popup */}
       {isMobileMenuOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+        <div 
+          className="lg:hidden fixed inset-0 z-40 flex items-center justify-center p-4"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            backdropFilter: 'blur(12px)',
+            transition: 'background-color 0.5s ease'
+          }}
           onClick={() => setIsMobileMenuOpen(false)}
-        />
+        >
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-6 right-6 text-charcoal hover:opacity-70 transition-opacity"
+            aria-label="Close"
+          >
+            <X size={32} strokeWidth={1.5} />
+          </button>
+
+          <div 
+            className="max-w-4xl px-8 overflow-y-auto max-h-[80vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <nav className="space-y-4">
+              {mockProjects.map((project) => (
+                <Link
+                  key={project.id}
+                  to={`/project/${project.id}`}
+                  onClick={handleProjectClick}
+                  className={
+                    `block text-lg font-normal tracking-wide transition-opacity duration-200 ${
+                      location.pathname === `/project/${project.id}`
+                        ? 'opacity-100'
+                        : 'opacity-50 hover:opacity-100'
+                    }`
+                  }
+                >
+                  {project.title.toUpperCase()}
+                </Link>
+              ))}
+
+              <div className="pt-8 mt-8">
+                <button
+                  onClick={handleInfoClick}
+                  className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
+                >
+                  INFORMATION
+                </button>
+              </div>
+            </nav>
+          </div>
+        </div>
       )}
     </>
   );
