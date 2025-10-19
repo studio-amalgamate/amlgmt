@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
+import InfoModal from './components/InfoModal';
 import Home from './pages/Home';
 import Project from './pages/Project';
-import Info from './pages/Info';
 
 function App() {
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
+
   useEffect(() => {
     // Load Google Fonts
     const link1 = document.createElement('link');
@@ -23,11 +25,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Sidebar />
+        <Sidebar onInfoClick={() => setIsInfoOpen(true)} />
+        <InfoModal isOpen={isInfoOpen} onClose={() => setIsInfoOpen(false)} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/project/:id" element={<Project />} />
-          <Route path="/info" element={<Info />} />
         </Routes>
       </BrowserRouter>
     </div>

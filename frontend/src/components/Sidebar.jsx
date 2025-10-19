@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { mockProjects } from '../mock';
 
-const Sidebar = () => {
+const Sidebar = ({ onInfoClick }) => {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
@@ -33,18 +33,12 @@ const Sidebar = () => {
           ))}
 
           <div className="pt-8 space-y-3 border-t border-gray-200 mt-8">
-            <Link
-              to="/info"
-              className={
-                `block text-sm font-normal tracking-wide transition-opacity duration-200 ${
-                  location.pathname === '/info'
-                    ? 'opacity-100'
-                    : 'opacity-50 hover:opacity-100'
-                }`
-              }
+            <button
+              onClick={onInfoClick}
+              className="block text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
             >
               INFORMATION
-            </Link>
+            </button>
             <a
               href="https://instagram.com"
               target="_blank"
