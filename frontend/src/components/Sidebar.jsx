@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { mockProjects } from '../mock';
+import { projectAPI } from '../services/api';
 
 const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const location = useLocation();
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      const data = await projectAPI.getAll();
+      setProjects(data);
+    } catch (error) {
+      console.error('Error loading projects:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleProjectClick = () => {
     if (window.innerWidth < 1024) {
@@ -18,6 +35,10 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
       setIsMobileMenuOpen(false);
     }
   };
+
+  if (loading) {
+    return null; // Or a loading spinner
+  }
 
   return (
     <>
@@ -47,7 +68,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           </Link>
 
           <nav className="space-y-3 flex-grow">
-            {mockProjects.map((project) => (
+            {projects.map((project) => (
               <Link
                 key={project.id}
                 to={`/project/${project.id}`}
@@ -102,7 +123,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           <div className="flex-grow flex flex-col justify-between px-8 py-8 overflow-y-auto">
             <div className="flex-grow flex items-center">
               <nav className="space-y-5 text-charcoal w-full">
-                {mockProjects.map((project) => (
+                {projects.map((project) => (
                   <Link
                     key={project.id}
                     to={`/project/${project.id}`}
