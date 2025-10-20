@@ -104,6 +104,7 @@ const Dashboard = () => {
                   <p className="text-sm text-gray-400 mt-1">
                     {project.media.length} media items
                     {project.featured && ' • Featured'}
+                    {!project.published && ' • DRAFT'}
                   </p>
                 </div>
                 <div className="flex gap-2">
