@@ -51,6 +51,11 @@ export const projectAPI = {
     return response.data;
   },
 
+  getAllAdmin: async () => {
+    const response = await api.get('/admin/projects');
+    return response.data;
+  },
+
   getById: async (id) => {
     const response = await api.get(`/projects/${id}`);
     return response.data;
