@@ -186,15 +186,28 @@ const ProjectEditor = () => {
               />
             </div>
 
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="featured"
-                checked={formData.featured}
-                onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
-              />
-              <Label htmlFor="featured" className="cursor-pointer">
-                Mark as Featured (appears on homepage)
-              </Label>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="published"
+                  checked={formData.published}
+                  onCheckedChange={(checked) => setFormData({ ...formData, published: checked })}
+                />
+                <Label htmlFor="published" className="cursor-pointer">
+                  Published (visible on public site)
+                </Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="featured"
+                  checked={formData.featured}
+                  onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
+                />
+                <Label htmlFor="featured" className="cursor-pointer">
+                  Featured Project (all media from this project on homepage)
+                </Label>
+              </div>
             </div>
           </div>
 
