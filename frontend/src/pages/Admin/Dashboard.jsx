@@ -20,7 +20,7 @@ const Dashboard = () => {
 
   const loadProjects = async () => {
     try {
-      const data = await projectAPI.getAll();
+      const data = await projectAPI.getAllAdmin();
       setProjects(data);
     } catch (error) {
       console.error('Error loading projects:', error);
