@@ -284,18 +284,21 @@ async def reorder_media(
 
 @api_router.get("/featured")
 async def get_featured_images():
-    projects = await projects_collection.find({"featured": True}).to_list(100)
+    # Get all projects (published and unpublished for flexibility)
+    projects = await projects_collection.find().to_list(100)
     
     featured_images = []
     for project in projects:
         for media in project.get("media", []):
-            featured_images.append({
-                "type": media["type"],
-                "url": media["url"],
-                "alt": media["alt"],
-                "projectId": project["id"],
-                "projectTitle": project["title"]
-            })
+            # Include media if it's individually featured OR if project is featured
+            if media.get("featured", False) or project.get("featured", False):
+                featured_images.append({
+                    "type": media["type"],
+                    "url": media["url"],
+                    "alt": media["alt"],
+                    "projectId": project["id"],
+                    "projectTitle": project["title"]
+                })
     
     return featured_images
 
