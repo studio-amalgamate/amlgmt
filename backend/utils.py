@@ -45,6 +45,7 @@ async def save_upload_file(file: UploadFile) -> tuple[str, str]:
 def delete_upload_file(url: str):
     """Delete uploaded file"""
     try:
+        # Handle both /uploads/ and /api/uploads/ paths
         filename = url.split("/")[-1]
         file_path = UPLOAD_DIR / filename
         if file_path.exists():
