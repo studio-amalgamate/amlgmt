@@ -279,17 +279,29 @@ const ProjectEditor = () => {
                         <Video size={48} className="text-gray-400" />
                       </div>
                     )}
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleDeleteMedia(item.id)}
-                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Trash2 size={16} />
-                    </Button>
-                    <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
-                      {item.type === 'image' ? <ImageIcon size={12} className="inline mr-1" /> : <Video size={12} className="inline mr-1" />}
+                    <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button
+                        variant={item.featured ? "default" : "secondary"}
+                        size="sm"
+                        onClick={() => handleToggleFeatured(item.id, item.featured)}
+                        className="h-8 w-8 p-0"
+                        title={item.featured ? "Remove from featured" : "Add to featured"}
+                      >
+                        <Star size={16} fill={item.featured ? "currentColor" : "none"} />
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleDeleteMedia(item.id)}
+                        className="h-8 w-8 p-0"
+                      >
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
+                    <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+                      {item.type === 'image' ? <ImageIcon size={12} /> : <Video size={12} />}
                       {item.order + 1}
+                      {item.featured && <Star size={12} fill="currentColor" className="ml-1" />}
                     </div>
                   </div>
                 ))}
