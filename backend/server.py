@@ -36,10 +36,7 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
-# Mount uploads directory for static file serving
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
-
+# Mount uploads directory BEFORE api routes with /api prefix
 class CORSStaticFiles(StaticFiles):
     async def get_response(self, path: str, scope):
         response = await super().get_response(path, scope)
@@ -47,7 +44,7 @@ class CORSStaticFiles(StaticFiles):
         response.headers["Cross-Origin-Resource-Policy"] = "cross-origin"
         return response
 
-app.mount("/uploads", CORSStaticFiles(directory="/app/backend/uploads"), name="uploads")
+app.mount("/api/uploads", CORSStaticFiles(directory="/app/backend/uploads"), name="uploads")
 
 # Configure logging
 logging.basicConfig(
