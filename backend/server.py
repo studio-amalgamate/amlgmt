@@ -286,6 +286,41 @@ async def reorder_media(
     updated_project = await projects_collection.find_one({"id": project_id})
     return Project(**updated_project)
 
+@api_router.put("/projects/{project_id}/media/{media_id}/featured")
+async def toggle_media_featured(
+    project_id: str,
+    media_id: str,
+    featured: bool,
+    username: str = Depends(verify_token)
+):
+    project = await projects_collection.find_one({"id": project_id})
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    # Update featured status for specific media
+    media_list = project.get("media", [])
+    media_found = False
+    for media in media_list:
+        if media["id"] == media_id:
+            media["featured"] = featured
+            media_found = True
+            break
+    
+    if not media_found:
+        raise HTTPException(status_code=404, detail="Media not found")
+    
+    await projects_collection.update_one(
+        {"id": project_id},
+        {
+            "$set": {
+                "media": media_list,
+                "updated_at": datetime.utcnow()
+            }
+        }
+    )
+    
+    return {"message": "Media featured status updated", "featured": featured}
+
 # ===== Featured Images Route =====
 
 @api_router.get("/featured")
