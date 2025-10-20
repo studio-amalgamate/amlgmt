@@ -115,6 +115,21 @@ const ProjectEditor = () => {
     }
   };
 
+  const handleToggleFeatured = async (mediaId, currentStatus) => {
+    try {
+      await mediaAPI.toggleFeatured(projectId, mediaId, !currentStatus);
+      setMedia(prev => prev.map(m => 
+        m.id === mediaId ? { ...m, featured: !currentStatus } : m
+      ));
+      toast({ 
+        title: 'Success', 
+        description: !currentStatus ? 'Added to featured' : 'Removed from featured' 
+      });
+    } catch (error) {
+      toast({ title: 'Error', description: 'Failed to update featured status', variant: 'destructive' });
+    }
+  };
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
