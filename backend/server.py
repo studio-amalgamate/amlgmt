@@ -100,7 +100,8 @@ async def login(user: UserLogin):
 
 @api_router.get("/projects", response_model=List[Project])
 async def get_projects():
-    projects = await projects_collection.find().sort("created_at", -1).to_list(100)
+    # Only return published projects for public view
+    projects = await projects_collection.find({"published": True}).sort("created_at", -1).to_list(100)
     return [Project(**project) for project in projects]
 
 @api_router.get("/projects/{project_id}", response_model=Project)
