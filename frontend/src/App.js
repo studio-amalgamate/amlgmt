@@ -5,6 +5,10 @@ import Sidebar from './components/Sidebar';
 import InfoModal from './components/InfoModal';
 import Home from './pages/Home';
 import Project from './pages/Project';
+import AdminLogin from './pages/Admin/Login';
+import AdminDashboard from './pages/Admin/Dashboard';
+import ProjectEditor from './pages/Admin/ProjectEditor';
+import { Toaster } from './components/ui/toaster';
 
 function App() {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
@@ -31,20 +35,45 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Sidebar 
-          onInfoClick={() => setIsInfoOpen(true)} 
-          isMobileMenuOpen={isMobileMenuOpen}
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-        />
-        <InfoModal 
-          isOpen={isInfoOpen} 
-          onClose={() => setIsInfoOpen(false)}
-          onBack={window.innerWidth < 1024 ? handleBack : null}
-        />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/project/:id" element={<Project />} />
+          {/* Public Routes */}
+          <Route path="/" element={
+            <>
+              <Sidebar 
+                onInfoClick={() => setIsInfoOpen(true)} 
+                isMobileMenuOpen={isMobileMenuOpen}
+                setIsMobileMenuOpen={setIsMobileMenuOpen}
+              />
+              <InfoModal 
+                isOpen={isInfoOpen} 
+                onClose={() => setIsInfoOpen(false)}
+                onBack={window.innerWidth < 1024 ? handleBack : null}
+              />
+              <Home />
+            </>
+          } />
+          <Route path="/project/:id" element={
+            <>
+              <Sidebar 
+                onInfoClick={() => setIsInfoOpen(true)} 
+                isMobileMenuOpen={isMobileMenuOpen}
+                setIsMobileMenuOpen={setIsMobileMenuOpen}
+              />
+              <InfoModal 
+                isOpen={isInfoOpen} 
+                onClose={() => setIsInfoOpen(false)}
+                onBack={window.innerWidth < 1024 ? handleBack : null}
+              />
+              <Project />
+            </>
+          } />
+
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/project/:id" element={<ProjectEditor />} />
         </Routes>
+        <Toaster />
       </BrowserRouter>
     </div>
   );
