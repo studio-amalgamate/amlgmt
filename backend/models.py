@@ -27,6 +27,7 @@ class Media(BaseModel):
     url: str
     alt: str = ""
     order: int = 0
+    featured: bool = False  # Individual media can be featured
 
 # Project Models
 class ProjectCreate(BaseModel):
@@ -36,6 +37,7 @@ class ProjectCreate(BaseModel):
     location: str = ""
     description: str = ""
     featured: bool = False
+    published: bool = True  # New: draft/published status
 
 class ProjectUpdate(BaseModel):
     title: Optional[str] = None
@@ -44,6 +46,7 @@ class ProjectUpdate(BaseModel):
     location: Optional[str] = None
     description: Optional[str] = None
     featured: Optional[bool] = None
+    published: Optional[bool] = None  # New: can update publish status
 
 class Project(BaseModel):
     id: str
@@ -54,6 +57,7 @@ class Project(BaseModel):
     description: str
     media: List[Media] = []
     featured: bool
+    published: bool = True  # New: published status
     created_at: datetime
     updated_at: datetime
 
