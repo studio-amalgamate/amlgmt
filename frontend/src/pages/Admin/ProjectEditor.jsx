@@ -48,6 +48,7 @@ const ProjectEditor = () => {
         location: data.location,
         description: data.description,
         featured: data.featured,
+        published: data.published !== undefined ? data.published : true,
       });
       setMedia(data.media || []);
     } catch (error) {
