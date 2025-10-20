@@ -39,8 +39,8 @@ async def save_upload_file(file: UploadFile) -> tuple[str, str]:
     with file_path.open("wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
-    # Return relative URL path
-    return f"/uploads/{filename}", file_type
+    # Return relative URL path with /api prefix
+    return f"/api/uploads/{filename}", file_type
 
 def delete_upload_file(url: str):
     """Delete uploaded file"""
