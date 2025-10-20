@@ -139,6 +139,7 @@ async def create_project(
         "description": project.description,
         "media": [],
         "featured": project.featured,
+        "published": project.published if hasattr(project, 'published') else True,
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow()
     }
