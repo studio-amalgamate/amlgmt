@@ -239,6 +239,10 @@ const ProjectEditor = () => {
                         src={`${process.env.REACT_APP_BACKEND_URL}${item.url}`}
                         alt={item.alt}
                         className="w-full h-48 object-cover rounded-lg"
+                        onError={(e) => {
+                          console.error('Image load error:', item.url);
+                          e.target.style.display = 'none';
+                        }}
                       />
                     ) : (
                       <div className="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center">
