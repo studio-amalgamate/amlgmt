@@ -23,6 +23,7 @@ const ProjectEditor = () => {
     location: '',
     description: '',
     featured: false,
+    published: true,
   });
   const [media, setMedia] = useState([]);
   const [projectId, setProjectId] = useState(id !== 'new' ? id : null);
