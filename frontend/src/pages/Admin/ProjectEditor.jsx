@@ -6,7 +6,7 @@ import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Textarea } from '../../components/ui/textarea';
 import { Checkbox } from '../../components/ui/checkbox';
-import { ArrowLeft, Upload, Trash2, Image as ImageIcon, Video } from 'lucide-react';
+import { ArrowLeft, Upload, Trash2, Image as ImageIcon, Video, Star } from 'lucide-react';
 import { toast } from '../../hooks/use-toast';
 
 const ProjectEditor = () => {
