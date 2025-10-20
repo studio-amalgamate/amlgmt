@@ -92,6 +92,11 @@ export const mediaAPI = {
     return response.data;
   },
 
+  toggleFeatured: async (projectId, mediaId, featured) => {
+    const response = await api.put(`/projects/${projectId}/media/${mediaId}/featured?featured=${featured}`);
+    return response.data;
+  },
+
   reorder: async (projectId, mediaOrder) => {
     const response = await api.put(`/projects/${projectId}/media/reorder`, {
       media_order: mediaOrder,
