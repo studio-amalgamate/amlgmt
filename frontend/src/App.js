@@ -73,6 +73,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/project/:id" element={<ProjectEditor />} />
+          <Route path="/admin/settings" element={<Settings />} />
         </Routes>
         <Toaster />
       </BrowserRouter>
