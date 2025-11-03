@@ -112,4 +112,26 @@ export const featuredAPI = {
   },
 };
 
+// Settings API
+export const settingsAPI = {
+  get: async () => {
+    const response = await api.get('/settings');
+    return response.data;
+  },
+
+  update: async (settings) => {
+    const response = await api.put('/settings', settings);
+    return response.data;
+  },
+
+  uploadLogo: async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await api.post('/settings/logo', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+};
+
 export default api;
