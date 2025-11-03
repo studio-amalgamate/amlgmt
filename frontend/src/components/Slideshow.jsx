@@ -96,8 +96,13 @@ const Slideshow = ({ media, projectInfo }) => {
   const nextMedia = currentIndex + 1 < sortedMedia.length ? sortedMedia[currentIndex + 1] : null;
   const nextOrientation = imageOrientations[currentIndex + 1];
 
-  // On desktop, show 2 portrait images side by side
-  const showDoublePortrait = !isMobile && currentOrientation === 'portrait' && nextOrientation === 'portrait' && nextMedia;
+  // On desktop, show 2 portrait images side by side ONLY if both are portrait AND images (not videos)
+  const showDoublePortrait = !isMobile && 
+    currentMedia.type === 'image' && 
+    currentOrientation === 'portrait' && 
+    nextMedia && 
+    nextMedia.type === 'image' && 
+    nextOrientation === 'portrait';
 
   return (
     <div className="relative h-screen w-full">
