@@ -6,6 +6,7 @@ const Slideshow = ({ media, projectInfo }) => {
   const [cursorSide, setCursorSide] = useState('left');
   const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [imageOrientations, setImageOrientations] = useState({});
 
   useEffect(() => {
     const checkMobile = () => {
@@ -22,6 +23,24 @@ const Slideshow = ({ media, projectInfo }) => {
     if (a.type === 'image' && b.type === 'video') return 1;
     return 0;
   });
+
+  // Detect image orientation
+  useEffect(() => {
+    if (isMobile) return; // Only for desktop
+
+    sortedMedia.forEach((item, index) => {
+      if (item.type === 'image' && !imageOrientations[index]) {
+        const img = new Image();
+        img.onload = () => {
+          setImageOrientations(prev => ({
+            ...prev,
+            [index]: img.width > img.height ? 'landscape' : 'portrait'
+          }));
+        };
+        img.src = `${process.env.REACT_APP_BACKEND_URL}${item.url}`;
+      }
+    });
+  }, [sortedMedia, isMobile]);
 
   const handleMouseMove = (e) => {
     if (isMobile) return;
@@ -42,11 +61,30 @@ const Slideshow = ({ media, projectInfo }) => {
   };
 
   const nextSlide = () => {
+    const orientation = imageOrientations[currentIndex];
+    if (!isMobile && orientation === 'portrait' && currentIndex + 1 < sortedMedia.length) {
+      // For portrait, skip by 2 if next is also available
+      const nextOrientation = imageOrientations[currentIndex + 1];
+      if (nextOrientation === 'portrait') {
+        setCurrentIndex((prev) => (prev + 2) % sortedMedia.length);
+        return;
+      }
+    }
     setCurrentIndex((prev) => (prev + 1) % sortedMedia.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + sortedMedia.length) % sortedMedia.length);
+    const prevIndex = (currentIndex - 1 + sortedMedia.length) % sortedMedia.length;
+    const prevOrientation = imageOrientations[prevIndex];
+    
+    if (!isMobile && prevOrientation === 'portrait' && prevIndex > 0) {
+      const prevPrevOrientation = imageOrientations[prevIndex - 1];
+      if (prevPrevOrientation === 'portrait') {
+        setCurrentIndex((prev) => (prev - 2 + sortedMedia.length) % sortedMedia.length);
+        return;
+      }
+    }
+    setCurrentIndex(prevIndex);
   };
 
   useEffect(() => {
@@ -54,6 +92,12 @@ const Slideshow = ({ media, projectInfo }) => {
   }, [media]);
 
   const currentMedia = sortedMedia[currentIndex];
+  const currentOrientation = imageOrientations[currentIndex];
+  const nextMedia = currentIndex + 1 < sortedMedia.length ? sortedMedia[currentIndex + 1] : null;
+  const nextOrientation = imageOrientations[currentIndex + 1];
+
+  // On desktop, show 2 portrait images side by side
+  const showDoublePortrait = !isMobile && currentOrientation === 'portrait' && nextOrientation === 'portrait' && nextMedia;
 
   return (
     <div className="relative h-screen w-full">
@@ -72,23 +116,44 @@ const Slideshow = ({ media, projectInfo }) => {
             : 'default'
         }}
       >
-        {currentMedia.type === 'image' ? (
-          <img
-            src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-            alt={currentMedia.alt}
-            className="max-h-[70vh] lg:max-h-[50vh] w-auto max-w-full object-contain"
-            style={{ userSelect: 'none', pointerEvents: 'none' }}
-          />
+        {showDoublePortrait ? (
+          // Show two portrait images side by side
+          <div className="flex gap-8 items-center justify-center h-full">
+            <img
+              src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+              alt={currentMedia.alt}
+              className="max-h-[50vh] w-auto object-contain"
+              style={{ userSelect: 'none', pointerEvents: 'none' }}
+            />
+            <img
+              src={`${process.env.REACT_APP_BACKEND_URL}${nextMedia.url}`}
+              alt={nextMedia.alt}
+              className="max-h-[50vh] w-auto object-contain"
+              style={{ userSelect: 'none', pointerEvents: 'none' }}
+            />
+          </div>
         ) : (
-          <video
-            src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-            className="max-h-[70vh] lg:max-h-[50vh] w-auto max-w-full object-contain"
-            autoPlay
-            muted
-            loop
-            controls={isHovering}
-            style={{ userSelect: 'none' }}
-          />
+          // Show single image or video
+          <>
+            {currentMedia.type === 'image' ? (
+              <img
+                src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+                alt={currentMedia.alt}
+                className="max-h-[70vh] lg:max-h-[50vh] w-auto max-w-full object-contain"
+                style={{ userSelect: 'none', pointerEvents: 'none' }}
+              />
+            ) : (
+              <video
+                src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+                className="max-h-[70vh] lg:max-h-[50vh] w-auto max-w-full object-contain"
+                autoPlay
+                muted
+                loop
+                controls={isHovering}
+                style={{ userSelect: 'none' }}
+              />
+            )}
+          </>
         )}
       </div>
 
