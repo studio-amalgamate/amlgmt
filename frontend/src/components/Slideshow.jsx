@@ -76,13 +76,13 @@ const Slideshow = ({ media, projectInfo }) => {
           <img
             src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
             alt={currentMedia.alt}
-            className="max-h-[70vh] md:max-h-[85vh] w-auto max-w-full object-contain"
+            className="max-h-[70vh] lg:max-h-[50vh] w-auto max-w-full object-contain"
             style={{ userSelect: 'none', pointerEvents: 'none' }}
           />
         ) : (
           <video
             src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-            className="max-h-[70vh] md:max-h-[85vh] w-auto max-w-full object-contain"
+            className="max-h-[70vh] lg:max-h-[50vh] w-auto max-w-full object-contain"
             autoPlay
             muted
             loop
