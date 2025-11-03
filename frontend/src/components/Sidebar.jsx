@@ -131,20 +131,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           <div className="flex-grow flex flex-col justify-between px-8 py-8 overflow-y-auto">
             <div className="flex-grow flex items-center">
               <nav className="space-y-5 text-charcoal w-full">
-                {/* About button */}
-                <button
-                  onClick={handleInfoClick}
-                  className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
-                >
-                  ABOUT
-                </button>
-
-                {/* Work label */}
-                <div className="text-lg font-normal tracking-wide opacity-50">
-                  WORK
-                </div>
-
-                {/* Projects list */}
+                {/* Projects list directly */}
                 {projects.map((project) => (
                   <Link
                     key={project.id}
@@ -162,6 +149,16 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                   </Link>
                 ))}
               </nav>
+            </div>
+
+            {/* About at bottom */}
+            <div className="pt-8 mt-8">
+              <button
+                onClick={handleInfoClick}
+                className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
+              >
+                ABOUT
+              </button>
             </div>
           </div>
         </div>
