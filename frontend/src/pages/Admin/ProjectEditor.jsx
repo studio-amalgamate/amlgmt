@@ -6,8 +6,9 @@ import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Textarea } from '../../components/ui/textarea';
 import { Checkbox } from '../../components/ui/checkbox';
-import { ArrowLeft, Upload, Trash2, Image as ImageIcon, Video, Star } from 'lucide-react';
+import { ArrowLeft, Upload, Trash2, Image as ImageIcon, Video, Star, GripVertical } from 'lucide-react';
 import { toast } from '../../hooks/use-toast';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const ProjectEditor = () => {
   const { id } = useParams();
