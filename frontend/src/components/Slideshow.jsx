@@ -184,8 +184,8 @@ const Slideshow = ({ media, projectInfo }) => {
 
       {/* Project info overlay - changed to sans-serif */}
       {projectInfo && (
-        <div className="absolute bottom-6 left-4 md:bottom-8 md:left-8 text-charcoal">
-          <h2 className="text-xl md:text-2xl font-normal mb-2">
+        <div className="absolute bottom-6 left-4 md:bottom-8 md:left-8 text-charcoal bg-white bg-opacity-80 px-3 py-2 rounded lg:bg-transparent lg:bg-opacity-0">
+          <h2 className="text-base md:text-2xl font-normal mb-1 md:mb-2">
             {projectInfo.title}
           </h2>
           <p className="text-xs md:text-sm opacity-70">
