@@ -11,7 +11,8 @@ from typing import List
 
 from models import (
     UserCreate, UserLogin, UserResponse, Token,
-    ProjectCreate, ProjectUpdate, Project, Media, MediaReorder
+    ProjectCreate, ProjectUpdate, Project, Media, MediaReorder,
+    SiteSettings, SiteSettingsUpdate
 )
 from auth import (
     get_password_hash, verify_password, create_access_token, verify_token
