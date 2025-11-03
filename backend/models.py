@@ -61,5 +61,27 @@ class Project(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+# Settings Models
+class SiteSettings(BaseModel):
+    brand_name: str = "Your Name"
+    logo_url: Optional[str] = None
+    about_title: str = "About"
+    about_content: str = ""
+    contact_email: str = ""
+    contact_phone: str = ""
+    instagram_url: str = "https://instagram.com"
+    clients_list: str = ""
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class SiteSettingsUpdate(BaseModel):
+    brand_name: Optional[str] = None
+    logo_url: Optional[str] = None
+    about_title: Optional[str] = None
+    about_content: Optional[str] = None
+    contact_email: Optional[str] = None
+    contact_phone: Optional[str] = None
+    instagram_url: Optional[str] = None
+    clients_list: Optional[str] = None
+
 class MediaReorder(BaseModel):
     media_order: List[dict]  # [{ id: str, order: int }]
