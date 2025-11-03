@@ -8,6 +8,7 @@ import Project from './pages/Project';
 import AdminLogin from './pages/Admin/Login';
 import AdminDashboard from './pages/Admin/Dashboard';
 import ProjectEditor from './pages/Admin/ProjectEditor';
+import Settings from './pages/Admin/Settings';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
