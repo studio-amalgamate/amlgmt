@@ -78,12 +78,12 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
 
             {/* Work dropdown */}
             <div className="group relative">
-              <div className="text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+              <div className="text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-3">
                 WORK
               </div>
               
-              {/* Projects list - appears on hover */}
-              <div className="hidden group-hover:block pl-4 pt-2 space-y-2">
+              {/* Projects list - appears on hover, no indent */}
+              <div className="hidden group-hover:block space-y-2">
                 {projects.map((project) => (
                   <Link
                     key={project.id}
