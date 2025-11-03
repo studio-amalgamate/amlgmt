@@ -68,32 +68,40 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           </Link>
 
           <nav className="space-y-3 flex-grow">
-            {projects.map((project) => (
-              <Link
-                key={project.id}
-                to={`/project/${project.id}`}
-                className={
-                  `block text-sm font-normal tracking-wide transition-opacity duration-200 ${
-                    location.pathname === `/project/${project.id}`
-                      ? 'opacity-100'
-                      : 'opacity-50 hover:opacity-100'
-                  }`
-                }
-              >
-                {project.title.toUpperCase()}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Information at the absolute bottom */}
-          <div className="pt-8 mt-auto">
+            {/* About button */}
             <button
               onClick={handleInfoClick}
-              className="block text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
+              className="block text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
             >
-              INFORMATION
+              ABOUT
             </button>
-          </div>
+
+            {/* Work dropdown */}
+            <div className="group relative">
+              <div className="text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default">
+                WORK
+              </div>
+              
+              {/* Projects list - appears on hover */}
+              <div className="hidden group-hover:block pl-4 pt-2 space-y-2">
+                {projects.map((project) => (
+                  <Link
+                    key={project.id}
+                    to={`/project/${project.id}`}
+                    className={
+                      `block text-sm font-normal tracking-wide transition-opacity duration-200 ${
+                        location.pathname === `/project/${project.id}`
+                          ? 'opacity-100'
+                          : 'opacity-50 hover:opacity-100'
+                      }`
+                    }
+                  >
+                    {project.title.toUpperCase()}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </nav>
         </div>
       </aside>
 
