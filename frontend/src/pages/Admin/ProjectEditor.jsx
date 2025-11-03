@@ -287,51 +287,73 @@ const ProjectEditor = () => {
             {media.length === 0 ? (
               <p className="text-center text-gray-500 py-8">No media uploaded yet</p>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {media.map((item) => (
-                  <div key={item.id} className="relative group">
-                    {item.type === 'image' ? (
-                      <img
-                        src={`${process.env.REACT_APP_BACKEND_URL}${item.url}`}
-                        alt={item.alt}
-                        className="w-full h-48 object-cover rounded-lg"
-                        onError={(e) => {
-                          console.error('Image load error:', item.url);
-                          e.target.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center">
-                        <Video size={48} className="text-gray-400" />
-                      </div>
-                    )}
-                    <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button
-                        variant={item.featured ? "default" : "secondary"}
-                        size="sm"
-                        onClick={() => handleToggleFeatured(item.id, item.featured)}
-                        className="h-8 w-8 p-0"
-                        title={item.featured ? "Remove from featured" : "Add to featured"}
-                      >
-                        <Star size={16} fill={item.featured ? "currentColor" : "none"} />
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDeleteMedia(item.id)}
-                        className="h-8 w-8 p-0"
-                      >
-                        <Trash2 size={16} />
-                      </Button>
+              <DragDropContext onDragEnd={handleDragEnd}>
+                <Droppable droppableId="media-list" direction="horizontal">
+                  {(provided) => (
+                    <div
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      className="grid grid-cols-2 md:grid-cols-3 gap-4"
+                    >
+                      {media.map((item, index) => (
+                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                          {(provided, snapshot) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              className={`relative group ${snapshot.isDragging ? 'opacity-50' : ''}`}
+                            >
+                              <div {...provided.dragHandleProps} className="absolute top-2 left-2 z-10 bg-white rounded p-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-move">
+                                <GripVertical size={16} className="text-gray-600" />
+                              </div>
+                              {item.type === 'image' ? (
+                                <img
+                                  src={`${process.env.REACT_APP_BACKEND_URL}${item.url}`}
+                                  alt={item.alt}
+                                  className="w-full h-48 object-cover rounded-lg"
+                                  onError={(e) => {
+                                    console.error('Image load error:', item.url);
+                                    e.target.style.display = 'none';
+                                  }}
+                                />
+                              ) : (
+                                <div className="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center">
+                                  <Video size={48} className="text-gray-400" />
+                                </div>
+                              )}
+                              <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Button
+                                  variant={item.featured ? "default" : "secondary"}
+                                  size="sm"
+                                  onClick={() => handleToggleFeatured(item.id, item.featured)}
+                                  className="h-8 w-8 p-0"
+                                  title={item.featured ? "Remove from featured" : "Add to featured"}
+                                >
+                                  <Star size={16} fill={item.featured ? "currentColor" : "none"} />
+                                </Button>
+                                <Button
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => handleDeleteMedia(item.id)}
+                                  className="h-8 w-8 p-0"
+                                >
+                                  <Trash2 size={16} />
+                                </Button>
+                              </div>
+                              <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+                                {item.type === 'image' ? <ImageIcon size={12} /> : <Video size={12} />}
+                                {item.order + 1}
+                                {item.featured && <Star size={12} fill="currentColor" className="ml-1" />}
+                              </div>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
                     </div>
-                    <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
-                      {item.type === 'image' ? <ImageIcon size={12} /> : <Video size={12} />}
-                      {item.order + 1}
-                      {item.featured && <Star size={12} fill="currentColor" className="ml-1" />}
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
             )}
           </div>
         )}
