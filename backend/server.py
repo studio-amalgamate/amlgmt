@@ -29,6 +29,7 @@ db = client[os.environ['DB_NAME']]
 # Collections
 users_collection = db.users
 projects_collection = db.projects
+settings_collection = db.settings
 
 # Create the main app without a prefix
 app = FastAPI()
