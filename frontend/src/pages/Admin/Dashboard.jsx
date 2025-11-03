@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { projectAPI, authAPI } from '../../services/api';
 import { Button } from '../../components/ui/button';
-import { Plus, LogOut, Edit, Trash2 } from 'lucide-react';
+import { Plus, LogOut, Edit, Trash2, Settings as SettingsIcon } from 'lucide-react';
 import { toast } from '../../hooks/use-toast';
 
 const Dashboard = () => {
