@@ -66,6 +66,12 @@ const Dashboard = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-normal">Project Dashboard</h1>
           <div className="flex gap-4">
+            <Link to="/admin/settings">
+              <Button variant="outline">
+                <SettingsIcon className="mr-2" size={16} />
+                Settings
+              </Button>
+            </Link>
             <Link to="/admin/project/new">
               <Button>
                 <Plus className="mr-2" size={16} />
