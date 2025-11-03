@@ -139,30 +139,28 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                   ABOUT
                 </button>
 
-                {/* Work section */}
-                <div>
-                  <div className="text-lg font-normal tracking-wide opacity-50 mb-3">
-                    WORK
-                  </div>
-                  <div className="pl-4 space-y-3">
-                    {projects.map((project) => (
-                      <Link
-                        key={project.id}
-                        to={`/project/${project.id}`}
-                        onClick={handleProjectClick}
-                        className={
-                          `block text-base font-normal tracking-wide transition-opacity duration-200 ${
-                            location.pathname === `/project/${project.id}`
-                              ? 'opacity-100'
-                              : 'opacity-50 hover:opacity-100'
-                          }`
-                        }
-                      >
-                        {project.title.toUpperCase()}
-                      </Link>
-                    ))}
-                  </div>
+                {/* Work label */}
+                <div className="text-lg font-normal tracking-wide opacity-50">
+                  WORK
                 </div>
+
+                {/* Projects list */}
+                {projects.map((project) => (
+                  <Link
+                    key={project.id}
+                    to={`/project/${project.id}`}
+                    onClick={handleProjectClick}
+                    className={
+                      `block text-lg font-normal tracking-wide transition-opacity duration-200 ${
+                        location.pathname === `/project/${project.id}`
+                          ? 'opacity-100'
+                          : 'opacity-50 hover:opacity-100'
+                      }`
+                    }
+                  >
+                    {project.title.toUpperCase()}
+                  </Link>
+                ))}
               </nav>
             </div>
           </div>
