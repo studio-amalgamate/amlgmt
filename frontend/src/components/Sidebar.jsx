@@ -131,32 +131,39 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           <div className="flex-grow flex flex-col justify-between px-8 py-8 overflow-y-auto">
             <div className="flex-grow flex items-center">
               <nav className="space-y-5 text-charcoal w-full">
-                {projects.map((project) => (
-                  <Link
-                    key={project.id}
-                    to={`/project/${project.id}`}
-                    onClick={handleProjectClick}
-                    className={
-                      `block text-lg font-normal tracking-wide transition-opacity duration-200 ${
-                        location.pathname === `/project/${project.id}`
-                          ? 'opacity-100'
-                          : 'opacity-50 hover:opacity-100'
-                      }`
-                    }
-                  >
-                    {project.title.toUpperCase()}
-                  </Link>
-                ))}
-              </nav>
-            </div>
+                {/* About button */}
+                <button
+                  onClick={handleInfoClick}
+                  className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
+                >
+                  ABOUT
+                </button>
 
-            <div className="pt-8 mt-8">
-              <button
-                onClick={handleInfoClick}
-                className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
-              >
-                INFORMATION
-              </button>
+                {/* Work section */}
+                <div>
+                  <div className="text-lg font-normal tracking-wide opacity-50 mb-3">
+                    WORK
+                  </div>
+                  <div className="pl-4 space-y-3">
+                    {projects.map((project) => (
+                      <Link
+                        key={project.id}
+                        to={`/project/${project.id}`}
+                        onClick={handleProjectClick}
+                        className={
+                          `block text-base font-normal tracking-wide transition-opacity duration-200 ${
+                            location.pathname === `/project/${project.id}`
+                              ? 'opacity-100'
+                              : 'opacity-50 hover:opacity-100'
+                          }`
+                        }
+                      >
+                        {project.title.toUpperCase()}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </nav>
             </div>
           </div>
         </div>
