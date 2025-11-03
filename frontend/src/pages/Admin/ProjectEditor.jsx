@@ -131,6 +131,31 @@ const ProjectEditor = () => {
     }
   };
 
+  const handleDragEnd = async (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(media);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    // Update order property
+    const updatedItems = items.map((item, index) => ({
+      ...item,
+      order: index
+    }));
+
+    setMedia(updatedItems);
+
+    // Save to backend
+    try {
+      const mediaOrder = updatedItems.map(item => ({ id: item.id, order: item.order }));
+      await mediaAPI.reorder(projectId, mediaOrder);
+      toast({ title: 'Success', description: 'Media order updated' });
+    } catch (error) {
+      toast({ title: 'Error', description: 'Failed to update order', variant: 'destructive' });
+    }
+  };
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
