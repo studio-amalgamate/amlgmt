@@ -353,6 +353,58 @@ async def get_featured_images():
     
     return featured_images
 
+# ===== Settings Routes =====
+
+@api_router.get("/settings", response_model=SiteSettings)
+async def get_settings():
+    settings = await settings_collection.find_one({})
+    if not settings:
+        # Return default settings
+        default_settings = SiteSettings()
+        return default_settings
+    return SiteSettings(**settings)
+
+@api_router.put("/settings", response_model=SiteSettings)
+async def update_settings(
+    settings_update: SiteSettingsUpdate,
+    username: str = Depends(verify_token)
+):
+    existing = await settings_collection.find_one({})
+    
+    update_data = {k: v for k, v in settings_update.dict().items() if v is not None}
+    update_data["updated_at"] = datetime.utcnow()
+    
+    if existing:
+        await settings_collection.update_one(
+            {"_id": existing["_id"]},
+            {"$set": update_data}
+        )
+    else:
+        settings_doc = SiteSettings(**update_data).dict()
+        await settings_collection.insert_one(settings_doc)
+    
+    updated_settings = await settings_collection.find_one({})
+    return SiteSettings(**updated_settings)
+
+@api_router.post("/settings/logo", response_model=dict)
+async def upload_logo(
+    file: UploadFile = File(...),
+    username: str = Depends(verify_token)
+):
+    try:
+        file_url, file_type = await save_upload_file(file)
+        
+        # Update settings with logo URL
+        await settings_collection.update_one(
+            {},
+            {"$set": {"logo_url": file_url, "updated_at": datetime.utcnow()}},
+            upsert=True
+        )
+        
+        return {"logo_url": file_url}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 # ===== Health Check =====
 
 @api_router.get("/")
