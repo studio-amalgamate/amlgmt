@@ -75,6 +75,13 @@ export const projectAPI = {
     const response = await api.delete(`/projects/${id}`);
     return response.data;
   },
+
+  reorder: async (projectOrder) => {
+    const response = await api.put('/projects/reorder', {
+      project_order: projectOrder,
+    });
+    return response.data;
+  },
 };
 
 export const mediaAPI = {
