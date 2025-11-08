@@ -72,8 +72,8 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block fixed left-0 top-0 h-screen bg-white overflow-y-auto z-40" style={{ width: '15vw', paddingLeft: '10%' }}>
-        <div className="py-8 pr-4 h-full flex flex-col">
+      <aside className="hidden lg:flex fixed left-0 top-0 h-screen bg-white z-40" style={{ width: 'auto', paddingLeft: '2%' }}>
+        <div className="py-8 pr-8 h-full flex flex-col">
           <Link to="/" className="block mb-12">
             {settings.logo_url ? (
               <img 
