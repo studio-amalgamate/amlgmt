@@ -335,6 +335,8 @@ async def toggle_media_featured(
 
 @api_router.get("/featured")
 async def get_featured_images():
+    import random
+    
     # Get all projects (published and unpublished for flexibility)
     projects = await projects_collection.find().to_list(100)
     
@@ -350,6 +352,9 @@ async def get_featured_images():
                     "projectId": project["id"],
                     "projectTitle": project["title"]
                 })
+    
+    # Randomize the order
+    random.shuffle(featured_images)
     
     return featured_images
 
