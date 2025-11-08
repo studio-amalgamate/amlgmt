@@ -233,7 +233,7 @@ const Slideshow = ({ media, projectInfo }) => {
                     autoPlay
                     muted
                     loop
-                    controls={isHovering}
+                    controls
                     style={{ userSelect: 'none' }}
                   />
                 )}
