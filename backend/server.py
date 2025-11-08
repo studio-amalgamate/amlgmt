@@ -296,6 +296,28 @@ async def reorder_media(
     updated_project = await projects_collection.find_one({"id": project_id})
     return Project(**updated_project)
 
+
+@api_router.put("/projects/reorder")
+async def reorder_projects(
+    reorder: ProjectReorder,
+    username: str = Depends(verify_token)
+):
+    # Update order for each project
+    for item in reorder.project_order:
+        await projects_collection.update_one(
+            {"id": item["id"]},
+            {
+                "$set": {
+                    "order": item["order"],
+                    "updated_at": datetime.utcnow()
+                }
+            }
+        )
+    
+    # Return updated projects list
+    projects = await projects_collection.find().sort("order", 1).to_list(100)
+    return [Project(**project) for project in projects]
+
 @api_router.put("/projects/{project_id}/media/{media_id}/featured")
 async def toggle_media_featured(
     project_id: str,
