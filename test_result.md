@@ -202,3 +202,5 @@ agent_communication:
     message: "Comprehensive backend API testing completed successfully. All 13 test cases passed including health check, authentication flow, project CRUD operations, featured images API, and protected route security. Backend is fully functional and ready for production use."
   - agent: "main"
     message: "Mobile layout updated with precise 100vh structure per user requirements: 15vh menu, 65vh slideshow, 5vh navigation buttons, 15vh project info. All layouts (desktop/tablet/mobile) verified via screenshots and working correctly."
+  - agent: "main"
+    message: "Implemented user-requested changes: 1) Added project drag-and-drop reordering in admin dashboard with grip icons. 2) Disabled dynamic cursor over video elements to allow video control access (images keep cursor navigation). 3) Updated mobile layout: 10vh menu, 70vh slideshow, 8vh navigation (removed counter), 12vh left-aligned project info. All features tested and working."
