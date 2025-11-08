@@ -60,10 +60,12 @@ const Slideshow = ({ media, projectInfo }) => {
   const currentMedia = sortedMedia[currentIndex];
 
   return (
-    <div className="relative h-screen w-full flex">
-      {/* Project Info Wrapper - Full height, 2% left padding */}
+    <div className="relative h-screen w-full lg:flex lg:ml-0">
+      {/* Column 1: Sidebar (15vw) - handled by Sidebar component */}
+      
+      {/* Column 2: Project Info (15vw) - Full height wrapper */}
       {projectInfo && (
-        <div className="hidden lg:flex items-end pb-8" style={{ paddingLeft: '2%', minWidth: 'auto' }}>
+        <div className="hidden lg:flex items-end pb-8 bg-white fixed" style={{ width: '15vw', left: '15vw', height: '100vh', paddingLeft: '2%', zIndex: 30 }}>
           <div className="text-charcoal">
             <h2 className="text-2xl font-normal mb-2">
               {projectInfo.title}
@@ -75,8 +77,8 @@ const Slideshow = ({ media, projectInfo }) => {
         </div>
       )}
 
-      {/* Slideshow Wrapper - Full height, 10% left and right padding */}
-      <div className="flex-grow relative h-screen">
+      {/* Column 3: Slideshow (70vw) - Full height wrapper */}
+      <div className="relative h-screen lg:ml-[30vw]" style={{ width: '100%' }}>
         <div
           className="h-full w-full flex items-center justify-center overflow-hidden px-4 md:px-8 lg:px-[10%]"
           onMouseMove={handleMouseMove}
