@@ -168,7 +168,7 @@ backend:
 frontend:
   - task: "Frontend Integration"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/App.js"
     stuck_count: 0
     priority: "medium"
@@ -180,6 +180,9 @@ frontend:
       - working: true
         agent: "main"
         comment: "Mobile layout restructured to fit exactly 100vh with 4 rows: menu (15vh), slideshow (65vh), navigation (5vh), project info (15vh). Desktop and tablet layouts preserved."
+      - working: true
+        agent: "main"
+        comment: "Mobile layout updated: menu (10vh), slideshow (70vh with video controls), navigation (8vh, counter removed), project info (12vh, left-aligned). Video cursor disabled for control access. Project drag-and-drop reordering added to dashboard with grip icons."
 
 metadata:
   created_by: "testing_agent"
