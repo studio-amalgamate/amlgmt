@@ -64,44 +64,54 @@ const InfoModal = ({ isOpen, onClose, onBack }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <h1 className="text-3xl md:text-5xl mb-8 md:mb-12" style={{ fontFamily: 'Playfair Display, serif' }}>
-          About
+          {settings.about_title || 'About'}
         </h1>
         
         <div className="space-y-6 md:space-y-8 text-base md:text-lg leading-relaxed opacity-90">
-          <p>
-            [Your Name] is a photographer based in [City], India. Specializing in portrait, 
-            documentary, and editorial photography.
-          </p>
-          
-          <p>
-            With a focus on capturing authentic moments and telling compelling visual stories, 
-            [Your Name] has worked with clients across fashion, editorial, and commercial sectors.
-          </p>
+          {settings.about_content ? (
+            <div style={{ whiteSpace: 'pre-wrap' }}>{settings.about_content}</div>
+          ) : (
+            <>
+              <p>
+                [Your Name] is a photographer based in [City], India. Specializing in portrait, 
+                documentary, and editorial photography.
+              </p>
+              
+              <p>
+                With a focus on capturing authentic moments and telling compelling visual stories, 
+                [Your Name] has worked with clients across fashion, editorial, and commercial sectors.
+              </p>
+            </>
+          )}
 
           <div className="pt-8 md:pt-12 border-t border-white border-opacity-20 mt-8 md:mt-12">
             <h2 className="text-2xl md:text-3xl mb-4 md:mb-6" style={{ fontFamily: 'Playfair Display, serif' }}>
               Contact
             </h2>
-            <p>Email: your.email@example.com</p>
-            <p>Phone: +91 XXXXX XXXXX</p>
-            <p className="mt-6">
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="hover:opacity-70 transition-opacity underline"
-              >
-                Instagram
-              </a>
-            </p>
+            {settings.contact_email && <p>Email: {settings.contact_email}</p>}
+            {settings.contact_phone && <p>Phone: {settings.contact_phone}</p>}
+            {settings.instagram_url && (
+              <p className="mt-6">
+                <a 
+                  href={settings.instagram_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:opacity-70 transition-opacity underline"
+                >
+                  Instagram
+                </a>
+              </p>
+            )}
           </div>
 
-          <div className="pt-8 md:pt-12 border-t border-white border-opacity-20 mt-8 md:mt-12">
-            <h2 className="text-2xl md:text-3xl mb-4 md:mb-6" style={{ fontFamily: 'Playfair Display, serif' }}>
-              Select Clients
-            </h2>
-            <p>Vogue India, GQ, Elle, Harper's Bazaar, National Geographic</p>
-          </div>
+          {settings.clients_list && (
+            <div className="pt-8 md:pt-12 border-t border-white border-opacity-20 mt-8 md:mt-12">
+              <h2 className="text-2xl md:text-3xl mb-4 md:mb-6" style={{ fontFamily: 'Playfair Display, serif' }}>
+                Select Clients
+              </h2>
+              <p>{settings.clients_list}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
