@@ -77,13 +77,18 @@ const Slideshow = ({ media, projectInfo }) => {
       {/* Mobile Layout - Structured 100vh */}
       {isMobile ? (
         <div className="fixed inset-0 flex flex-col" style={{ height: '100vh', width: '100vw' }}>
-          {/* Menu space (15vh) - handled by Sidebar.jsx */}
-          <div style={{ height: '15vh' }}></div>
+          {/* Menu space (10vh) - handled by Sidebar.jsx */}
+          <div style={{ height: '10vh' }}></div>
 
-          {/* Image Slideshow (65vh) */}
+          {/* Image Slideshow (70vh) */}
           <div 
             className="flex items-center justify-center bg-white overflow-hidden"
-            style={{ height: '65vh', width: '100vw' }}
+            style={{ height: '70vh', width: '100vw' }}
+            onMouseMove={handleMouseMove}
+            onClick={!isMobile ? handleClick : undefined}
+            onMouseEnter={() => currentMedia.type !== 'video' && setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            style={{ cursor: currentMedia.type === 'video' ? 'default' : (isMobile ? 'default' : 'none'), height: '70vh', width: '100vw' }}
           >
             {currentMedia.type === 'image' ? (
               <img
@@ -99,15 +104,16 @@ const Slideshow = ({ media, projectInfo }) => {
                 autoPlay
                 muted
                 loop
+                controls
                 style={{ userSelect: 'none' }}
               />
             )}
           </div>
 
-          {/* Navigation Buttons (5vh) */}
+          {/* Navigation Buttons (8vh with 1.5vh padding top and bottom) */}
           <div 
             className="flex items-center justify-center gap-8 bg-white"
-            style={{ height: '5vh', width: '100vw' }}
+            style={{ height: '8vh', width: '100vw', paddingTop: '1.5vh', paddingBottom: '1.5vh' }}
           >
             <button
               onClick={prevSlide}
@@ -127,9 +133,6 @@ const Slideshow = ({ media, projectInfo }) => {
                 <polyline points="15 18 9 12 15 6"></polyline>
               </svg>
             </button>
-            <div className="text-xs opacity-50">
-              {currentIndex + 1} / {sortedMedia.length}
-            </div>
             <button
               onClick={nextSlide}
               className="text-charcoal hover:opacity-70 transition-opacity"
@@ -150,13 +153,13 @@ const Slideshow = ({ media, projectInfo }) => {
             </button>
           </div>
 
-          {/* Project Information (15vh) */}
+          {/* Project Information (12vh) - left aligned */}
           <div 
-            className="flex items-center justify-center bg-white px-6"
-            style={{ height: '15vh', width: '100vw' }}
+            className="flex items-center bg-white px-6"
+            style={{ height: '12vh', width: '100vw' }}
           >
             {projectInfo ? (
-              <div className="text-charcoal text-center">
+              <div className="text-charcoal text-left">
                 <h2 className="text-base font-normal mb-1">
                   {projectInfo.title}
                 </h2>
@@ -164,11 +167,7 @@ const Slideshow = ({ media, projectInfo }) => {
                   {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
                 </p>
               </div>
-            ) : (
-              <div className="text-xs opacity-50">
-                {currentIndex + 1} / {sortedMedia.length}
-              </div>
-            )}
+            ) : null}
           </div>
         </div>
       ) : (
