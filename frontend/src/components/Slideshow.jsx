@@ -47,6 +47,10 @@ const Slideshow = ({ media, projectInfo }) => {
 
   const handleClick = () => {
     if (isMobile) return;
+    
+    // Don't navigate if clicking on video
+    if (currentMedia.type === 'video') return;
+    
     if (cursorSide === 'right') {
       nextSlide();
     } else {
