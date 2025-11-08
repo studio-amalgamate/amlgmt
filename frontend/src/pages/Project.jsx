@@ -25,7 +25,7 @@ const Project = () => {
 
   if (loading) {
     return (
-      <div className="pt-20 lg:pt-0 lg:ml-64 h-screen flex items-center justify-center px-4">
+      <div className="lg:ml-64 h-screen flex items-center justify-center px-4">
         <p className="text-xl opacity-50">Loading...</p>
       </div>
     );
@@ -33,7 +33,7 @@ const Project = () => {
 
   if (!project) {
     return (
-      <div className="pt-20 lg:pt-0 lg:ml-64 h-screen flex items-center justify-center px-4">
+      <div className="lg:ml-64 h-screen flex items-center justify-center px-4">
         <p className="text-xl opacity-50">Project not found</p>
       </div>
     );
@@ -41,7 +41,7 @@ const Project = () => {
 
   if (project.media.length === 0) {
     return (
-      <div className="pt-20 lg:pt-0 lg:ml-64 h-screen flex items-center justify-center px-4">
+      <div className="lg:ml-64 h-screen flex items-center justify-center px-4">
         <div className="text-center">
           <h2 className="text-2xl mb-4">{project.title}</h2>
           <p className="text-xl opacity-50">No media in this project yet</p>
@@ -51,7 +51,7 @@ const Project = () => {
   }
 
   return (
-    <div className="pt-20 lg:pt-0 h-screen">
+    <div className="h-screen">
       <Slideshow
         media={project.media}
         projectInfo={{
