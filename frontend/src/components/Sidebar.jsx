@@ -50,9 +50,17 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
       {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6 bg-white">
         <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
-          <h1 className="text-xl font-normal tracking-wide uppercase">
-            Your Name
-          </h1>
+          {settings.logo_url ? (
+            <img 
+              src={`${process.env.REACT_APP_BACKEND_URL}${settings.logo_url}`} 
+              alt={settings.brand_name}
+              className="h-8 object-contain"
+            />
+          ) : (
+            <h1 className="text-xl font-normal tracking-wide uppercase">
+              {settings.brand_name}
+            </h1>
+          )}
         </Link>
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
