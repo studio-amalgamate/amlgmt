@@ -363,15 +363,24 @@ def test_reorder_projects(results, token):
         first_three = projects[:3]
         original_order = [p['id'] for p in first_three]
         print(f"  Original order of first 3 projects: {original_order}")
+        print(f"  Original order values: {[p.get('order', 'N/A') for p in first_three]}")
         
-        # Create reorder payload - swap first and third
+        # Create reorder payload - we need to reorder ALL projects to avoid conflicts
+        # Swap first and third, keep others in their relative positions
         reorder_payload = {
-            "project_order": [
-                {"id": first_three[2]['id'], "order": 0},  # Third becomes first
-                {"id": first_three[1]['id'], "order": 1},  # Second stays second
-                {"id": first_three[0]['id'], "order": 2}   # First becomes third
-            ]
+            "project_order": []
         }
+        
+        # Add the swapped first three
+        reorder_payload["project_order"].append({"id": first_three[2]['id'], "order": 0})  # Third becomes first
+        reorder_payload["project_order"].append({"id": first_three[1]['id'], "order": 1})  # Second stays second
+        reorder_payload["project_order"].append({"id": first_three[0]['id'], "order": 2})  # First becomes third
+        
+        # Add remaining projects with incremented order values
+        for i, project in enumerate(projects[3:], start=3):
+            reorder_payload["project_order"].append({"id": project['id'], "order": i})
+        
+        print(f"  Reordering {len(reorder_payload['project_order'])} projects")
         
         # Step 3: Send PUT request to reorder endpoint
         response = requests.put(f"{API_URL}/projects/reorder", json=reorder_payload, headers=headers, timeout=10)
@@ -400,6 +409,7 @@ def test_reorder_projects(results, token):
         
         print(f"  Expected order: {expected_order}")
         print(f"  New order: {new_order}")
+        print(f"  New order values: {[p.get('order', 'N/A') for p in public_projects[:3]]}")
         
         if new_order == expected_order:
             results.log_pass("Reorder Projects - Order Changed")
