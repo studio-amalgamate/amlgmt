@@ -47,8 +47,8 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
 
   return (
     <>
-      {/* Mobile Header */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6 bg-white">
+      {/* Mobile Header - Fixed 15vh */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 bg-white" style={{ height: '15vh', width: '100vw' }}>
         <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
           {settings.logo_url ? (
             <img 
