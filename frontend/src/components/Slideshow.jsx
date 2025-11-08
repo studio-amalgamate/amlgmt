@@ -54,8 +54,9 @@ const Slideshow = ({ media, projectInfo }) => {
   const handleClick = () => {
     if (isMobile) return;
     
-    // Don't navigate if clicking on video
-    if (currentMedia.type === 'video') return;
+    // Don't navigate if clicking directly on video element
+    // Only prevent navigation if actually over the video, not just when video is displayed
+    if (isOverVideo) return;
     
     if (cursorSide === 'right') {
       nextSlide();
