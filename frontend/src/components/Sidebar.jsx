@@ -137,9 +137,17 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           }}
         >
           <div className="flex items-center justify-between p-6">
-            <h1 className="text-xl font-normal tracking-wide uppercase">
-              Your Name
-            </h1>
+            {settings.logo_url ? (
+              <img 
+                src={`${process.env.REACT_APP_BACKEND_URL}${settings.logo_url}`} 
+                alt={settings.brand_name}
+                className="h-8 object-contain"
+              />
+            ) : (
+              <h1 className="text-xl font-normal tracking-wide uppercase">
+                {settings.brand_name}
+              </h1>
+            )}
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="text-charcoal hover:opacity-70 transition-opacity"
