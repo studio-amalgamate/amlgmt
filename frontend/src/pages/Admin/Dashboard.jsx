@@ -127,40 +127,64 @@ const Dashboard = () => {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-4">
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="bg-white p-6 rounded-lg shadow-sm flex justify-between items-center"
-              >
-                <div>
-                  <h2 className="text-xl font-medium mb-2">{project.title}</h2>
-                  <p className="text-sm text-gray-500">
-                    {project.client} • {project.date} • {project.location}
-                  </p>
-                  <p className="text-sm text-gray-400 mt-1">
-                    {project.media.length} media items
-                    {project.featured && ' • Featured'}
-                    {!project.published && ' • DRAFT'}
-                  </p>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="projects">
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="grid gap-4"
+                >
+                  {projects.map((project, index) => (
+                    <Draggable key={project.id} draggableId={project.id} index={index}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className={`bg-white p-6 rounded-lg shadow-sm flex items-center gap-4 ${
+                            snapshot.isDragging ? 'shadow-lg' : ''
+                          }`}
+                        >
+                          <div
+                            {...provided.dragHandleProps}
+                            className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600"
+                          >
+                            <GripVertical size={24} />
+                          </div>
+                          <div className="flex-1">
+                            <h2 className="text-xl font-medium mb-2">{project.title}</h2>
+                            <p className="text-sm text-gray-500">
+                              {project.client} • {project.date} • {project.location}
+                            </p>
+                            <p className="text-sm text-gray-400 mt-1">
+                              {project.media.length} media items
+                              {project.featured && ' • Featured'}
+                              {!project.published && ' • DRAFT'}
+                            </p>
+                          </div>
+                          <div className="flex gap-2">
+                            <Link to={`/admin/project/${project.id}`}>
+                              <Button variant="outline" size="sm">
+                                <Edit size={16} />
+                              </Button>
+                            </Link>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleDelete(project.id)}
+                            >
+                              <Trash2 size={16} />
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
                 </div>
-                <div className="flex gap-2">
-                  <Link to={`/admin/project/${project.id}`}>
-                    <Button variant="outline" size="sm">
-                      <Edit size={16} />
-                    </Button>
-                  </Link>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDelete(project.id)}
-                  >
-                    <Trash2 size={16} />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         )}
       </div>
     </div>
