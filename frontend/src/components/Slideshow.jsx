@@ -212,7 +212,7 @@ const Slideshow = ({ media, projectInfo }) => {
               onClick={!isMobile ? handleClick : undefined}
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
-              style={{ cursor: isMobile ? 'default' : 'none' }}
+              style={{ cursor: 'default' }}
             >
               {/* Image */}
               <div className="flex items-center justify-center" style={{ flex: '1' }}>
