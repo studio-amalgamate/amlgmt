@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { projectAPI } from '../services/api';
+import { projectAPI, settingsAPI } from '../services/api';
 
 const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const location = useLocation();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [settings, setSettings] = useState({ brand_name: 'Your Name', logo_url: '' });
 
   useEffect(() => {
-    loadProjects();
+    loadData();
   }, []);
 
-  const loadProjects = async () => {
+  const loadData = async () => {
     try {
-      const data = await projectAPI.getAll();
-      setProjects(data);
+      const [projectsData, settingsData] = await Promise.all([
+        projectAPI.getAll(),
+        settingsAPI.get()
+      ]);
+      setProjects(projectsData);
+      setSettings(settingsData);
     } catch (error) {
-      console.error('Error loading projects:', error);
+      console.error('Error loading data:', error);
     } finally {
       setLoading(false);
     }
