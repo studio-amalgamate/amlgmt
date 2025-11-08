@@ -60,69 +60,42 @@ const Slideshow = ({ media, projectInfo }) => {
   const currentMedia = sortedMedia[currentIndex];
 
   return (
-    <div className="relative h-screen w-full lg:flex lg:ml-0">
-      {/* Desktop: Column 2 - Project Info (15vw with 2.5vw padding) */}
-      {projectInfo && (
-        <div className="hidden xl:flex items-end bg-white fixed" style={{ width: '15vw', left: '15vw', height: '100vh', padding: '2.5vw 0 2.5vw 2.5vw', zIndex: 30 }}>
-          <div className="text-charcoal">
-            <h2 className="text-2xl font-normal mb-2">
-              {projectInfo.title}
-            </h2>
-            <p className="text-sm opacity-70">
-              {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
-            </p>
-          </div>
-        </div>
-      )}
+    <>
+      {/* Mobile Layout - Structured 100vh */}
+      {isMobile ? (
+        <div className="fixed inset-0 flex flex-col" style={{ height: '100vh', width: '100vw' }}>
+          {/* Menu space (15vh) - handled by Sidebar.jsx */}
+          <div style={{ height: '15vh' }}></div>
 
-      {/* Tablet: Column 2 - Project Info (25vw with 1.5vw padding) */}
-      {projectInfo && (
-        <div className="hidden lg:flex xl:hidden items-end bg-white fixed" style={{ width: '25vw', left: '15vw', height: '100vh', padding: '1.5vw 0 1.5vw 1.5vw', zIndex: 30 }}>
-          <div className="text-charcoal">
-            <h2 className="text-xl font-normal mb-2">
-              {projectInfo.title}
-            </h2>
-            <p className="text-xs opacity-70">
-              {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Desktop: Column 3 - Slideshow (70vw, starts after 30vw) */}
-      <div className="relative h-screen xl:ml-[30vw] lg:ml-[40vw]" style={{ width: '100%' }}>
-        <div
-          className="h-full w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 lg:px-[7.5vw] xl:px-[10%]"
-          onMouseMove={handleMouseMove}
-          onClick={!isMobile ? handleClick : undefined}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-          style={{ cursor: isMobile ? 'default' : 'none' }}
-        >
-          {/* Image */}
-          <div className="flex items-center justify-center" style={{ flex: '1' }}>
+          {/* Image Slideshow (65vh) */}
+          <div 
+            className="flex items-center justify-center bg-white overflow-hidden"
+            style={{ height: '65vh', width: '100vw' }}
+          >
             {currentMedia.type === 'image' ? (
               <img
                 src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
                 alt={currentMedia.alt}
-                className="w-auto object-contain max-h-[70vh] max-w-full"
+                className="w-auto h-auto max-h-full max-w-full object-contain"
                 style={{ userSelect: 'none', pointerEvents: 'none' }}
               />
             ) : (
               <video
                 src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-                className="w-auto object-contain max-h-[70vh] max-w-full"
+                className="w-auto h-auto max-h-full max-w-full object-contain"
                 autoPlay
                 muted
                 loop
-                controls={isHovering}
                 style={{ userSelect: 'none' }}
               />
             )}
           </div>
 
-          {/* Navigation Icons Below Image - Tablet & Mobile */}
-          <div className="xl:hidden flex items-center justify-center gap-8 pb-8">
+          {/* Navigation Buttons (5vh) */}
+          <div 
+            className="flex items-center justify-center gap-8 bg-white"
+            style={{ height: '5vh', width: '100vw' }}
+          >
             <button
               onClick={prevSlide}
               className="text-charcoal hover:opacity-70 transition-opacity"
@@ -141,6 +114,9 @@ const Slideshow = ({ media, projectInfo }) => {
                 <polyline points="15 18 9 12 15 6"></polyline>
               </svg>
             </button>
+            <div className="text-xs opacity-50">
+              {currentIndex + 1} / {sortedMedia.length}
+            </div>
             <button
               onClick={nextSlide}
               className="text-charcoal hover:opacity-70 transition-opacity"
@@ -161,65 +137,179 @@ const Slideshow = ({ media, projectInfo }) => {
             </button>
           </div>
 
-          {/* Custom Cursor Icons - Desktop Only */}
-          {!isMobile && isHovering && (
-            <div
-              className="fixed pointer-events-none z-50"
-              style={{
-                left: `${cursorPosition.x}px`,
-                top: `${cursorPosition.y}px`,
-                transform: 'translate(-50%, -50%)',
-              }}
-            >
-              {cursorSide === 'left' ? (
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#131314"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-              ) : (
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#131314"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              )}
+          {/* Project Information (15vh) */}
+          <div 
+            className="flex items-center justify-center bg-white px-6"
+            style={{ height: '15vh', width: '100vw' }}
+          >
+            {projectInfo ? (
+              <div className="text-charcoal text-center">
+                <h2 className="text-base font-normal mb-1">
+                  {projectInfo.title}
+                </h2>
+                <p className="text-xs opacity-70">
+                  {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
+                </p>
+              </div>
+            ) : (
+              <div className="text-xs opacity-50">
+                {currentIndex + 1} / {sortedMedia.length}
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        /* Desktop & Tablet Layout */
+        <div className="relative h-screen w-full lg:flex lg:ml-0">
+          {/* Desktop: Column 2 - Project Info (15vw with 2.5vw padding) */}
+          {projectInfo && (
+            <div className="hidden xl:flex items-end bg-white fixed" style={{ width: '15vw', left: '15vw', height: '100vh', padding: '2.5vw 0 2.5vw 2.5vw', zIndex: 30 }}>
+              <div className="text-charcoal">
+                <h2 className="text-2xl font-normal mb-2">
+                  {projectInfo.title}
+                </h2>
+                <p className="text-sm opacity-70">
+                  {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
+                </p>
+              </div>
             </div>
           )}
-        </div>
 
-        {/* Mobile Project info */}
-        {projectInfo && (
-          <div className="lg:hidden absolute bottom-6 left-4 text-charcoal bg-white bg-opacity-80 px-3 py-2 rounded">
-            <h2 className="text-base font-normal mb-1">
-              {projectInfo.title}
-            </h2>
-            <p className="text-xs opacity-70">
-              {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
-            </p>
+          {/* Tablet: Column 2 - Project Info (25vw with 1.5vw padding) */}
+          {projectInfo && (
+            <div className="hidden lg:flex xl:hidden items-end bg-white fixed" style={{ width: '25vw', left: '15vw', height: '100vh', padding: '1.5vw 0 1.5vw 1.5vw', zIndex: 30 }}>
+              <div className="text-charcoal">
+                <h2 className="text-xl font-normal mb-2">
+                  {projectInfo.title}
+                </h2>
+                <p className="text-xs opacity-70">
+                  {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Desktop: Column 3 - Slideshow (70vw, starts after 30vw) */}
+          <div className="relative h-screen xl:ml-[30vw] lg:ml-[40vw]" style={{ width: '100%' }}>
+            <div
+              className="h-full w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 lg:px-[7.5vw] xl:px-[10%]"
+              onMouseMove={handleMouseMove}
+              onClick={!isMobile ? handleClick : undefined}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+              style={{ cursor: isMobile ? 'default' : 'none' }}
+            >
+              {/* Image */}
+              <div className="flex items-center justify-center" style={{ flex: '1' }}>
+                {currentMedia.type === 'image' ? (
+                  <img
+                    src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+                    alt={currentMedia.alt}
+                    className="w-auto object-contain max-h-[70vh] max-w-full"
+                    style={{ userSelect: 'none', pointerEvents: 'none' }}
+                  />
+                ) : (
+                  <video
+                    src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+                    className="w-auto object-contain max-h-[70vh] max-w-full"
+                    autoPlay
+                    muted
+                    loop
+                    controls={isHovering}
+                    style={{ userSelect: 'none' }}
+                  />
+                )}
+              </div>
+
+              {/* Navigation Icons Below Image - Tablet Only */}
+              <div className="hidden lg:flex xl:hidden items-center justify-center gap-8 pb-8">
+                <button
+                  onClick={prevSlide}
+                  className="text-charcoal hover:opacity-70 transition-opacity"
+                  aria-label="Previous"
+                >
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#131314"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="text-charcoal hover:opacity-70 transition-opacity"
+                  aria-label="Next"
+                >
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#131314"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+
+              {/* Custom Cursor Icons - Desktop Only */}
+              {!isMobile && isHovering && (
+                <div
+                  className="fixed pointer-events-none z-50"
+                  style={{
+                    left: `${cursorPosition.x}px`,
+                    top: `${cursorPosition.y}px`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                >
+                  {cursorSide === 'left' ? (
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#131314"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                  ) : (
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#131314"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Slide counter - Desktop & Tablet */}
+            <div className="absolute bottom-6 right-4 md:bottom-8 md:right-8 text-xs md:text-sm opacity-50">
+              {currentIndex + 1} / {sortedMedia.length}
+            </div>
           </div>
-        )}
-
-        {/* Slide counter */}
-        <div className="absolute bottom-6 right-4 md:bottom-8 md:right-8 text-xs md:text-sm opacity-50">
-          {currentIndex + 1} / {sortedMedia.length}
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
