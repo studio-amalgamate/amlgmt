@@ -64,12 +64,20 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block fixed left-0 top-0 h-screen w-64 bg-white overflow-y-auto z-40">
-        <div className="p-8 h-full flex flex-col">
+      <aside className="hidden lg:block fixed left-0 top-0 h-screen bg-white overflow-y-auto z-40" style={{ width: '15vw', paddingLeft: '10%' }}>
+        <div className="py-8 pr-4 h-full flex flex-col">
           <Link to="/" className="block mb-12">
-            <h1 className="text-xl font-normal tracking-wide uppercase">
-              Your Name
-            </h1>
+            {settings.logo_url ? (
+              <img 
+                src={`${process.env.REACT_APP_BACKEND_URL}${settings.logo_url}`} 
+                alt={settings.brand_name}
+                className="h-12 object-contain"
+              />
+            ) : (
+              <h1 className="text-xl font-normal tracking-wide uppercase">
+                {settings.brand_name}
+              </h1>
+            )}
           </Link>
 
           <nav className="space-y-3 flex-grow">
