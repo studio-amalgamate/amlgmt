@@ -109,14 +109,14 @@ async def login(user: UserLogin):
 
 @api_router.get("/projects", response_model=List[Project])
 async def get_projects():
-    # Only return published projects for public view
-    projects = await projects_collection.find({"published": True}).sort("created_at", -1).to_list(100)
+    # Only return published projects for public view, sorted by order field
+    projects = await projects_collection.find({"published": True}).sort("order", 1).to_list(100)
     return [Project(**project) for project in projects]
 
 @api_router.get("/admin/projects", response_model=List[Project])
 async def get_all_projects(username: str = Depends(verify_token)):
-    # Admin can see all projects including drafts
-    projects = await projects_collection.find().sort("created_at", -1).to_list(100)
+    # Admin can see all projects including drafts, sorted by order field
+    projects = await projects_collection.find().sort("order", 1).to_list(100)
     return [Project(**project) for project in projects]
 
 @api_router.get("/projects/{project_id}", response_model=Project)
