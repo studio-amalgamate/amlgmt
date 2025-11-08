@@ -53,6 +53,36 @@ const Dashboard = () => {
     }
   };
 
+  const handleDragEnd = async (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(projects);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    // Update local state immediately for smooth UX
+    setProjects(items);
+
+    // Prepare order data for API
+    const projectOrder = items.map((project, index) => ({
+      id: project.id,
+      order: index,
+    }));
+
+    try {
+      await projectAPI.reorder(projectOrder);
+      toast({ title: 'Success', description: 'Projects reordered' });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to reorder projects',
+        variant: 'destructive',
+      });
+      // Reload to revert on error
+      loadProjects();
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
