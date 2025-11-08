@@ -32,15 +32,17 @@ const Slideshow = ({ media, projectInfo }) => {
     
     // Check if mouse is over video element
     const target = e.target;
-    const isOverVideo = target.tagName === 'VIDEO' || target.closest('video');
+    const overVideo = target.tagName === 'VIDEO' || target.closest('video');
     
-    if (isOverVideo) {
-      // Don't show custom cursor over video, let default cursor show
+    setIsOverVideo(overVideo);
+    
+    if (overVideo) {
+      // Over video: hide custom cursor, show default cursor, show controls
       setIsHovering(false);
       return;
     }
     
-    // Show custom cursor and determine side
+    // Outside video: show custom cursor, determine side
     setIsHovering(true);
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
