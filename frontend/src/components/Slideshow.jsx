@@ -5,6 +5,7 @@ const Slideshow = ({ media, projectInfo }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cursorSide, setCursorSide] = useState('left');
   const [isHovering, setIsHovering] = useState(false);
+  const [isOverVideo, setIsOverVideo] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
