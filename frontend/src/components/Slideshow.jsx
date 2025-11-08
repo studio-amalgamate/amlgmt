@@ -6,7 +6,6 @@ const Slideshow = ({ media, projectInfo }) => {
   const [cursorSide, setCursorSide] = useState('left');
   const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [imageOrientations, setImageOrientations] = useState({});
 
   useEffect(() => {
     const checkMobile = () => {
@@ -23,24 +22,6 @@ const Slideshow = ({ media, projectInfo }) => {
     if (a.type === 'image' && b.type === 'video') return 1;
     return 0;
   });
-
-  // Detect image orientation
-  useEffect(() => {
-    if (isMobile) return; // Only for desktop
-
-    sortedMedia.forEach((item, index) => {
-      if (item.type === 'image' && !imageOrientations[index]) {
-        const img = new Image();
-        img.onload = () => {
-          setImageOrientations(prev => ({
-            ...prev,
-            [index]: img.width > img.height ? 'landscape' : 'portrait'
-          }));
-        };
-        img.src = `${process.env.REACT_APP_BACKEND_URL}${item.url}`;
-      }
-    });
-  }, [sortedMedia, isMobile]);
 
   const handleMouseMove = (e) => {
     if (isMobile) return;
@@ -61,30 +42,11 @@ const Slideshow = ({ media, projectInfo }) => {
   };
 
   const nextSlide = () => {
-    const orientation = imageOrientations[currentIndex];
-    if (!isMobile && orientation === 'portrait' && currentIndex + 1 < sortedMedia.length) {
-      // For portrait, skip by 2 if next is also available
-      const nextOrientation = imageOrientations[currentIndex + 1];
-      if (nextOrientation === 'portrait') {
-        setCurrentIndex((prev) => (prev + 2) % sortedMedia.length);
-        return;
-      }
-    }
     setCurrentIndex((prev) => (prev + 1) % sortedMedia.length);
   };
 
   const prevSlide = () => {
-    const prevIndex = (currentIndex - 1 + sortedMedia.length) % sortedMedia.length;
-    const prevOrientation = imageOrientations[prevIndex];
-    
-    if (!isMobile && prevOrientation === 'portrait' && prevIndex > 0) {
-      const prevPrevOrientation = imageOrientations[prevIndex - 1];
-      if (prevPrevOrientation === 'portrait') {
-        setCurrentIndex((prev) => (prev - 2 + sortedMedia.length) % sortedMedia.length);
-        return;
-      }
-    }
-    setCurrentIndex(prevIndex);
+    setCurrentIndex((prev) => (prev - 1 + sortedMedia.length) % sortedMedia.length);
   };
 
   useEffect(() => {
@@ -92,23 +54,12 @@ const Slideshow = ({ media, projectInfo }) => {
   }, [media]);
 
   const currentMedia = sortedMedia[currentIndex];
-  const currentOrientation = imageOrientations[currentIndex];
-  const nextMedia = currentIndex + 1 < sortedMedia.length ? sortedMedia[currentIndex + 1] : null;
-  const nextOrientation = imageOrientations[currentIndex + 1];
-
-  // On desktop, show 2 portrait images side by side ONLY if both are portrait AND images (not videos)
-  const showDoublePortrait = !isMobile && 
-    currentMedia.type === 'image' && 
-    currentOrientation === 'portrait' && 
-    nextMedia && 
-    nextMedia.type === 'image' && 
-    nextOrientation === 'portrait';
 
   return (
     <div className="relative h-screen w-full">
       {/* Main slideshow area */}
       <div
-        className="h-full w-full flex items-center justify-center overflow-hidden px-4 md:px-8"
+        className="h-full w-full flex items-center justify-center overflow-hidden px-4 md:px-8 lg:px-[10vw]"
         onMouseMove={handleMouseMove}
         onClick={handleClick}
         onMouseEnter={() => setIsHovering(true)}
@@ -121,44 +72,23 @@ const Slideshow = ({ media, projectInfo }) => {
             : 'default'
         }}
       >
-        {showDoublePortrait ? (
-          // Show two portrait images side by side
-          <div className="flex gap-8 items-center justify-center h-full">
-            <img
-              src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-              alt={currentMedia.alt}
-              className="max-h-[50vh] w-auto object-contain"
-              style={{ userSelect: 'none', pointerEvents: 'none' }}
-            />
-            <img
-              src={`${process.env.REACT_APP_BACKEND_URL}${nextMedia.url}`}
-              alt={nextMedia.alt}
-              className="max-h-[50vh] w-auto object-contain"
-              style={{ userSelect: 'none', pointerEvents: 'none' }}
-            />
-          </div>
+        {currentMedia.type === 'image' ? (
+          <img
+            src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+            alt={currentMedia.alt}
+            className="w-auto object-contain max-h-[70vh] lg:max-h-[70vh] lg:max-w-[50vw]"
+            style={{ userSelect: 'none', pointerEvents: 'none' }}
+          />
         ) : (
-          // Show single image or video
-          <>
-            {currentMedia.type === 'image' ? (
-              <img
-                src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-                alt={currentMedia.alt}
-                className="max-h-[70vh] lg:max-h-[50vh] w-auto max-w-full object-contain"
-                style={{ userSelect: 'none', pointerEvents: 'none' }}
-              />
-            ) : (
-              <video
-                src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-                className="max-h-[70vh] lg:max-h-[50vh] w-auto max-w-full object-contain"
-                autoPlay
-                muted
-                loop
-                controls={isHovering}
-                style={{ userSelect: 'none' }}
-              />
-            )}
-          </>
+          <video
+            src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+            className="w-auto object-contain max-h-[70vh] lg:max-h-[70vh] lg:max-w-[50vw]"
+            autoPlay
+            muted
+            loop
+            controls={isHovering}
+            style={{ userSelect: 'none' }}
+          />
         )}
       </div>
 
@@ -182,9 +112,9 @@ const Slideshow = ({ media, projectInfo }) => {
         </>
       )}
 
-      {/* Project info overlay - changed to sans-serif */}
+      {/* Project info overlay */}
       {projectInfo && (
-        <div className="absolute bottom-6 left-4 md:bottom-8 md:left-8 text-charcoal bg-white bg-opacity-80 px-3 py-2 rounded lg:bg-transparent lg:bg-opacity-0">
+        <div className="absolute bottom-6 left-4 md:bottom-8 lg:left-[10%] text-charcoal bg-white bg-opacity-80 px-3 py-2 rounded lg:bg-transparent lg:bg-opacity-0 lg:w-[15vw]">
           <h2 className="text-base md:text-2xl font-normal mb-1 md:mb-2">
             {projectInfo.title}
           </h2>
