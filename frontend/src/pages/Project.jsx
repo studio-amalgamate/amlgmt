@@ -51,16 +51,18 @@ const Project = () => {
   }
 
   return (
-    <div className="pt-20 lg:pt-0 lg:ml-64 h-screen">
-      <Slideshow
-        media={project.media}
-        projectInfo={{
-          title: project.title,
-          client: project.client,
-          date: project.date,
-          location: project.location
-        }}
-      />
+    <div className="pt-20 lg:pt-0 h-screen" style={{ marginLeft: '0' }}>
+      <div className="lg:ml-[15vw]" style={{ width: '100%', maxWidth: '100vw' }}>
+        <Slideshow
+          media={project.media}
+          projectInfo={{
+            title: project.title,
+            client: project.client,
+            date: project.date,
+            location: project.location
+          }}
+        />
+      </div>
     </div>
   );
 };
