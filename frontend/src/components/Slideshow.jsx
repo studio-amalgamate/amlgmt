@@ -34,10 +34,13 @@ const Slideshow = ({ media, projectInfo }) => {
     const isOverVideo = target.tagName === 'VIDEO' || target.closest('video');
     
     if (isOverVideo) {
+      // Don't show custom cursor over video, let default cursor show
       setIsHovering(false);
       return;
     }
     
+    // Show custom cursor and determine side
+    setIsHovering(true);
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const containerWidth = rect.width;
