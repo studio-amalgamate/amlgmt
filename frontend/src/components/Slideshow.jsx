@@ -6,6 +6,7 @@ const Slideshow = ({ media, projectInfo }) => {
   const [cursorSide, setCursorSide] = useState('left');
   const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const checkMobile = () => {
