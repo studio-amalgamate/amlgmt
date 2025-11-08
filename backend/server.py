@@ -119,6 +119,28 @@ async def get_all_projects(username: str = Depends(verify_token)):
     projects = await projects_collection.find().sort("order", 1).to_list(100)
     return [Project(**project) for project in projects]
 
+
+@api_router.put("/projects/reorder")
+async def reorder_projects(
+    reorder: ProjectReorder,
+    username: str = Depends(verify_token)
+):
+    # Update order for each project
+    for item in reorder.project_order:
+        await projects_collection.update_one(
+            {"id": item["id"]},
+            {
+                "$set": {
+                    "order": item["order"],
+                    "updated_at": datetime.utcnow()
+                }
+            }
+        )
+    
+    # Return updated projects list
+    projects = await projects_collection.find().sort("order", 1).to_list(100)
+    return [Project(**project) for project in projects]
+
 @api_router.get("/projects/{project_id}", response_model=Project)
 async def get_project(project_id: str):
     project = await projects_collection.find_one({"id": project_id})
