@@ -61,11 +61,9 @@ const Slideshow = ({ media, projectInfo }) => {
 
   return (
     <div className="relative h-screen w-full lg:flex lg:ml-0">
-      {/* Column 1: Sidebar (15vw) - handled by Sidebar component */}
-      
-      {/* Column 2: Project Info (15vw) - Full height wrapper */}
+      {/* Desktop: Column 2 - Project Info (15vw with 2.5vw padding) */}
       {projectInfo && (
-        <div className="hidden lg:flex items-end pb-8 bg-white fixed" style={{ width: '15vw', left: '15vw', height: '100vh', paddingLeft: '2%', zIndex: 30 }}>
+        <div className="hidden xl:flex items-end bg-white fixed" style={{ width: '15vw', left: '15vw', height: '100vh', padding: '2.5vw 0 2.5vw 2.5vw', zIndex: 30 }}>
           <div className="text-charcoal">
             <h2 className="text-2xl font-normal mb-2">
               {projectInfo.title}
@@ -77,36 +75,93 @@ const Slideshow = ({ media, projectInfo }) => {
         </div>
       )}
 
-      {/* Column 3: Slideshow (70vw) - Full height wrapper */}
-      <div className="relative h-screen lg:ml-[30vw]" style={{ width: '100%' }}>
+      {/* Tablet: Column 2 - Project Info (25vw with 1.5vw padding) */}
+      {projectInfo && (
+        <div className="hidden lg:flex xl:hidden items-end bg-white fixed" style={{ width: '25vw', left: '15vw', height: '100vh', padding: '1.5vw 0 1.5vw 1.5vw', zIndex: 30 }}>
+          <div className="text-charcoal">
+            <h2 className="text-xl font-normal mb-2">
+              {projectInfo.title}
+            </h2>
+            <p className="text-xs opacity-70">
+              {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop: Column 3 - Slideshow (70vw, starts after 30vw) */}
+      <div className="relative h-screen xl:ml-[30vw] lg:ml-[40vw]" style={{ width: '100%' }}>
         <div
-          className="h-full w-full flex items-center justify-center overflow-hidden px-4 md:px-8 lg:px-[10%]"
+          className="h-full w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 lg:px-[7.5vw] xl:px-[10%]"
           onMouseMove={handleMouseMove}
-          onClick={handleClick}
+          onClick={!isMobile ? handleClick : undefined}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
-          style={{ cursor: 'none' }}
+          style={{ cursor: isMobile ? 'default' : 'none' }}
         >
-          {currentMedia.type === 'image' ? (
-            <img
-              src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-              alt={currentMedia.alt}
-              className="w-auto object-contain max-h-[70vh] max-w-full"
-              style={{ userSelect: 'none', pointerEvents: 'none' }}
-            />
-          ) : (
-            <video
-              src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
-              className="w-auto object-contain max-h-[70vh] max-w-full"
-              autoPlay
-              muted
-              loop
-              controls={isHovering}
-              style={{ userSelect: 'none' }}
-            />
-          )}
+          {/* Image */}
+          <div className="flex items-center justify-center" style={{ flex: '1' }}>
+            {currentMedia.type === 'image' ? (
+              <img
+                src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+                alt={currentMedia.alt}
+                className="w-auto object-contain max-h-[70vh] max-w-full"
+                style={{ userSelect: 'none', pointerEvents: 'none' }}
+              />
+            ) : (
+              <video
+                src={`${process.env.REACT_APP_BACKEND_URL}${currentMedia.url}`}
+                className="w-auto object-contain max-h-[70vh] max-w-full"
+                autoPlay
+                muted
+                loop
+                controls={isHovering}
+                style={{ userSelect: 'none' }}
+              />
+            )}
+          </div>
 
-          {/* Custom Cursor Icons */}
+          {/* Navigation Icons Below Image - Tablet & Mobile */}
+          <div className="xl:hidden flex items-center justify-center gap-8 pb-8">
+            <button
+              onClick={prevSlide}
+              className="text-charcoal hover:opacity-70 transition-opacity"
+              aria-label="Previous"
+            >
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#131314"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button
+              onClick={nextSlide}
+              className="text-charcoal hover:opacity-70 transition-opacity"
+              aria-label="Next"
+            >
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#131314"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          {/* Custom Cursor Icons - Desktop Only */}
           {!isMobile && isHovering && (
             <div
               className="fixed pointer-events-none z-50"
@@ -146,26 +201,6 @@ const Slideshow = ({ media, projectInfo }) => {
             </div>
           )}
         </div>
-
-        {/* Mobile navigation arrows */}
-        {isMobile && (
-          <>
-            <button
-              onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal bg-white bg-opacity-80 rounded-full p-2 shadow-lg"
-              aria-label="Previous"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-charcoal bg-white bg-opacity-80 rounded-full p-2 shadow-lg"
-              aria-label="Next"
-            >
-              <ChevronRight size={24} />
-            </button>
-          </>
-        )}
 
         {/* Mobile Project info */}
         {projectInfo && (
