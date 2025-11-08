@@ -38,10 +38,8 @@ const Home = () => {
   }
 
   return (
-    <div className="pt-20 lg:pt-0 h-screen" style={{ marginLeft: '0' }}>
-      <div className="lg:ml-[15vw]" style={{ width: '100%', maxWidth: '100vw' }}>
-        <Slideshow media={featuredImages} projectInfo={null} />
-      </div>
+    <div className="pt-20 lg:pt-0 h-screen">
+      <Slideshow media={featuredImages} projectInfo={null} />
     </div>
   );
 };
