@@ -288,12 +288,12 @@ const ProjectEditor = () => {
               <p className="text-center text-gray-500 py-8">No media uploaded yet</p>
             ) : (
               <DragDropContext onDragEnd={handleDragEnd}>
-                <Droppable droppableId="media-list" direction="horizontal">
+                <Droppable droppableId="media-list">
                   {(provided) => (
                     <div
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className="grid grid-cols-2 md:grid-cols-3 gap-4"
+                      className="space-y-3"
                     >
                       {media.map((item, index) => (
                         <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -301,32 +301,46 @@ const ProjectEditor = () => {
                             <div
                               ref={provided.innerRef}
                               {...provided.draggableProps}
-                              className={`relative group ${snapshot.isDragging ? 'opacity-50' : ''}`}
+                              className={`flex items-center gap-4 p-4 bg-gray-50 rounded-lg ${snapshot.isDragging ? 'opacity-50 shadow-lg' : ''}`}
                             >
-                              <div {...provided.dragHandleProps} className="absolute top-2 left-2 z-10 bg-white rounded p-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-move">
-                                <GripVertical size={16} className="text-gray-600" />
+                              {/* Drag Handle */}
+                              <div {...provided.dragHandleProps} className="cursor-move text-gray-400 hover:text-gray-600">
+                                <GripVertical size={24} />
                               </div>
-                              {item.type === 'image' ? (
-                                <img
-                                  src={`${process.env.REACT_APP_BACKEND_URL}${item.url}`}
-                                  alt={item.alt}
-                                  className="w-full h-48 object-cover rounded-lg"
-                                  onError={(e) => {
-                                    console.error('Image load error:', item.url);
-                                    e.target.style.display = 'none';
-                                  }}
-                                />
-                              ) : (
-                                <div className="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center">
-                                  <Video size={48} className="text-gray-400" />
-                                </div>
-                              )}
-                              <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+
+                              {/* Thumbnail */}
+                              <div className="flex-shrink-0">
+                                {item.type === 'image' ? (
+                                  <img
+                                    src={`${process.env.REACT_APP_BACKEND_URL}${item.url}`}
+                                    alt={item.alt}
+                                    className="w-24 h-24 object-cover rounded"
+                                    onError={(e) => {
+                                      console.error('Image load error:', item.url);
+                                      e.target.style.display = 'none';
+                                    }}
+                                  />
+                                ) : (
+                                  <div className="w-24 h-24 bg-gray-200 rounded flex items-center justify-center">
+                                    <Video size={32} className="text-gray-400" />
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Info */}
+                              <div className="flex-grow">
+                                <p className="text-sm font-medium text-gray-700">
+                                  {item.type === 'image' ? 'Image' : 'Video'} #{item.order + 1}
+                                </p>
+                                <p className="text-xs text-gray-500">{item.alt}</p>
+                              </div>
+
+                              {/* Actions */}
+                              <div className="flex gap-2">
                                 <Button
-                                  variant={item.featured ? "default" : "secondary"}
+                                  variant={item.featured ? "default" : "outline"}
                                   size="sm"
                                   onClick={() => handleToggleFeatured(item.id, item.featured)}
-                                  className="h-8 w-8 p-0"
                                   title={item.featured ? "Remove from featured" : "Add to featured"}
                                 >
                                   <Star size={16} fill={item.featured ? "currentColor" : "none"} />
@@ -335,15 +349,9 @@ const ProjectEditor = () => {
                                   variant="destructive"
                                   size="sm"
                                   onClick={() => handleDeleteMedia(item.id)}
-                                  className="h-8 w-8 p-0"
                                 >
                                   <Trash2 size={16} />
                                 </Button>
-                              </div>
-                              <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
-                                {item.type === 'image' ? <ImageIcon size={12} /> : <Video size={12} />}
-                                {item.order + 1}
-                                {item.featured && <Star size={12} fill="currentColor" className="ml-1" />}
                               </div>
                             </div>
                           )}
