@@ -70,12 +70,15 @@ const Dashboard = () => {
     }));
 
     try {
+      console.log('Sending reorder request:', projectOrder);
       await projectAPI.reorder(projectOrder);
       toast({ title: 'Success', description: 'Projects reordered' });
     } catch (error) {
+      console.error('Reorder error:', error);
+      console.error('Error response:', error.response?.data);
       toast({
         title: 'Error',
-        description: 'Failed to reorder projects',
+        description: error.response?.data?.detail || 'Failed to reorder projects',
         variant: 'destructive',
       });
       // Reload to revert on error
