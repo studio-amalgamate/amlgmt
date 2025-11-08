@@ -214,7 +214,10 @@ const Slideshow = ({ media, projectInfo }) => {
               onMouseMove={handleMouseMove}
               onClick={!isMobile ? handleClick : undefined}
               onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
+              onMouseLeave={() => {
+                setIsHovering(false);
+                setIsOverVideo(false);
+              }}
               style={{ cursor: isOverVideo ? 'default' : 'none' }}
             >
               {/* Image */}
