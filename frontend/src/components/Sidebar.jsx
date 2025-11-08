@@ -71,9 +71,9 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
         </button>
       </div>
 
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:block fixed left-0 top-0 h-screen bg-white z-40" style={{ width: '15vw', paddingLeft: '2%' }}>
-        <div className="py-8 pr-8 h-full flex flex-col">
+      {/* Desktop Sidebar - 15vw with 2.5vw padding */}
+      <aside className="hidden xl:block fixed left-0 top-0 h-screen bg-white z-40" style={{ width: '15vw', padding: '2.5vw 0 2.5vw 2.5vw' }}>
+        <div className="h-full flex flex-col">
           <Link to="/" className="block mb-12">
             {settings.logo_url ? (
               <img 
@@ -89,7 +89,6 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           </Link>
 
           <nav className="space-y-3 flex-grow">
-            {/* About button */}
             <button
               onClick={handleInfoClick}
               className="block text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
@@ -97,13 +96,11 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
               ABOUT
             </button>
 
-            {/* Work dropdown */}
             <div className="group relative">
               <div className="text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-3">
                 WORK
               </div>
               
-              {/* Projects list - appears on hover, no indent */}
               <div className="hidden group-hover:block space-y-2">
                 {projects.map((project) => (
                   <Link
@@ -111,6 +108,58 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                     to={`/project/${project.id}`}
                     className={
                       `block text-sm font-normal tracking-wide transition-opacity duration-200 ${
+                        location.pathname === `/project/${project.id}`
+                          ? 'opacity-100'
+                          : 'opacity-50 hover:opacity-100'
+                      }`
+                    }
+                  >
+                    {project.title.toUpperCase()}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      {/* Tablet Sidebar - 15vw with 1.5vw padding */}
+      <aside className="hidden lg:block xl:hidden fixed left-0 top-0 h-screen bg-white z-40" style={{ width: '15vw', padding: '1.5vw 0 1.5vw 1.5vw' }}>
+        <div className="h-full flex flex-col">
+          <Link to="/" className="block mb-8">
+            {settings.logo_url ? (
+              <img 
+                src={`${process.env.REACT_APP_BACKEND_URL}${settings.logo_url}`} 
+                alt={settings.brand_name}
+                className="h-10 object-contain"
+              />
+            ) : (
+              <h1 className="text-lg font-normal tracking-wide uppercase">
+                {settings.brand_name}
+              </h1>
+            )}
+          </Link>
+
+          <nav className="space-y-2 flex-grow">
+            <button
+              onClick={handleInfoClick}
+              className="block text-xs font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
+            >
+              ABOUT
+            </button>
+
+            <div className="group relative">
+              <div className="text-xs font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-2">
+                WORK
+              </div>
+              
+              <div className="hidden group-hover:block space-y-1">
+                {projects.map((project) => (
+                  <Link
+                    key={project.id}
+                    to={`/project/${project.id}`}
+                    className={
+                      `block text-xs font-normal tracking-wide transition-opacity duration-200 ${
                         location.pathname === `/project/${project.id}`
                           ? 'opacity-100'
                           : 'opacity-50 hover:opacity-100'
