@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, ArrowLeft } from 'lucide-react';
+import { settingsAPI } from '../services/api';
 
 const InfoModal = ({ isOpen, onClose, onBack }) => {
+  const [settings, setSettings] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (isOpen) {
+      loadSettings();
+    }
+  }, [isOpen]);
+
+  const loadSettings = async () => {
+    try {
+      const data = await settingsAPI.get();
+      setSettings(data);
+    } catch (error) {
+      console.error('Error loading settings:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   const isMobile = window.innerWidth < 1024;
