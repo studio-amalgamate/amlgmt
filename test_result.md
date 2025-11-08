@@ -165,6 +165,18 @@ backend:
         agent: "testing"
         comment: "All protected routes properly require JWT authentication. Unauthorized requests return 403 status as expected"
 
+  - task: "Project Reordering API"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Project reordering functionality fully working. PUT /api/projects/reorder endpoint successfully reorders projects. Tested with admin authentication, verified order changes are reflected in both admin (/api/admin/projects) and public (/api/projects) endpoints. Order persistence confirmed - projects maintain their order after multiple fetches. All 15 backend tests passed including the new reordering tests."
+
 frontend:
   - task: "Frontend Integration"
     implemented: true
