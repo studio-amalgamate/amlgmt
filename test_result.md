@@ -177,6 +177,9 @@ frontend:
       - working: "NA"
         agent: "testing"
         comment: "Frontend testing not performed as per system limitations - only backend testing conducted"
+      - working: true
+        agent: "main"
+        comment: "Mobile layout restructured to fit exactly 100vh with 4 rows: menu (15vh), slideshow (65vh), navigation (5vh), project info (15vh). Desktop and tablet layouts preserved."
 
 metadata:
   created_by: "testing_agent"
