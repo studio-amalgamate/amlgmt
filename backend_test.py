@@ -500,6 +500,15 @@ def main():
     # Test 10: Protected Routes Without Authentication
     test_protected_routes_without_auth(results)
     
+    # Test 11: Get Admin Projects
+    test_get_admin_projects(results, token)
+    
+    # Test 12: Reorder Projects
+    test_reorder_projects(results, token)
+    
+    # Test 13: Order Persistence
+    test_order_persistence(results, token)
+    
     # Final Summary
     success = results.summary()
     return success
