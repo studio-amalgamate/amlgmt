@@ -88,3 +88,6 @@ class SiteSettingsUpdate(BaseModel):
 
 class MediaReorder(BaseModel):
     media_order: List[dict]  # [{ id: str, order: int }]
+
+class ProjectReorder(BaseModel):
+    project_order: List[dict]  # [{ id: str, order: int }]
