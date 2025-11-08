@@ -23,7 +23,7 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="pt-20 lg:pt-0 lg:ml-64 h-screen flex items-center justify-center">
+      <div className="lg:ml-64 h-screen flex items-center justify-center">
         <p className="text-xl opacity-50">Loading...</p>
       </div>
     );
@@ -31,14 +31,14 @@ const Home = () => {
 
   if (featuredImages.length === 0) {
     return (
-      <div className="pt-20 lg:pt-0 lg:ml-64 h-screen flex items-center justify-center">
+      <div className="lg:ml-64 h-screen flex items-center justify-center">
         <p className="text-xl opacity-50">No featured images yet</p>
       </div>
     );
   }
 
   return (
-    <div className="pt-20 lg:pt-0 h-screen">
+    <div className="h-screen">
       <Slideshow media={featuredImages} projectInfo={null} />
     </div>
   );
