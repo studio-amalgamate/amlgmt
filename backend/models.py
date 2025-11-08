@@ -38,6 +38,7 @@ class ProjectCreate(BaseModel):
     description: str = ""
     featured: bool = False
     published: bool = True  # New: draft/published status
+    order: int = 0  # New: for reordering projects
 
 class ProjectUpdate(BaseModel):
     title: Optional[str] = None
@@ -47,6 +48,7 @@ class ProjectUpdate(BaseModel):
     description: Optional[str] = None
     featured: Optional[bool] = None
     published: Optional[bool] = None  # New: can update publish status
+    order: Optional[int] = None  # New: can update order
 
 class Project(BaseModel):
     id: str
@@ -58,6 +60,7 @@ class Project(BaseModel):
     media: List[Media] = []
     featured: bool
     published: bool = True  # New: published status
+    order: int = 0  # New: for reordering projects
     created_at: datetime
     updated_at: datetime
 
