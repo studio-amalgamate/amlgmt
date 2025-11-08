@@ -316,6 +316,150 @@ def test_protected_routes_without_auth(results):
         results.log_fail("Protected Routes Without Auth", f"Error: {str(e)}")
     return False
 
+def test_get_admin_projects(results, token):
+    """Test 11: Get Admin Projects"""
+    if not token:
+        results.log_fail("Get Admin Projects", "No authentication token available")
+        return None
+        
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        response = requests.get(f"{API_URL}/admin/projects", headers=headers, timeout=10)
+        
+        if response.status_code == 200:
+            data = response.json()
+            if isinstance(data, list):
+                results.log_pass("Get Admin Projects")
+                return data
+            else:
+                results.log_fail("Get Admin Projects", f"Expected list, got: {type(data)}")
+        else:
+            results.log_fail("Get Admin Projects", f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        results.log_fail("Get Admin Projects", f"Error: {str(e)}")
+    return None
+
+def test_reorder_projects(results, token):
+    """Test 12: Reorder Projects"""
+    if not token:
+        results.log_fail("Reorder Projects", "No authentication token available")
+        return False
+        
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        
+        # Step 1: Get current list of projects from admin endpoint
+        response = requests.get(f"{API_URL}/admin/projects", headers=headers, timeout=10)
+        if response.status_code != 200:
+            results.log_fail("Reorder Projects - Get Projects", f"Status code: {response.status_code}")
+            return False
+            
+        projects = response.json()
+        if len(projects) < 3:
+            results.log_fail("Reorder Projects", f"Need at least 3 projects, found {len(projects)}")
+            return False
+        
+        # Step 2: Take first 3 projects and reverse their order
+        first_three = projects[:3]
+        original_order = [p['id'] for p in first_three]
+        print(f"  Original order of first 3 projects: {original_order}")
+        
+        # Create reorder payload - swap first and third
+        reorder_payload = {
+            "project_order": [
+                {"id": first_three[2]['id'], "order": 0},  # Third becomes first
+                {"id": first_three[1]['id'], "order": 1},  # Second stays second
+                {"id": first_three[0]['id'], "order": 2}   # First becomes third
+            ]
+        }
+        
+        # Step 3: Send PUT request to reorder endpoint
+        response = requests.put(f"{API_URL}/projects/reorder", json=reorder_payload, headers=headers, timeout=10)
+        
+        if response.status_code != 200:
+            results.log_fail("Reorder Projects - PUT Request", f"Status code: {response.status_code}, Response: {response.text}")
+            return False
+        
+        # Step 4: Verify response returns all projects
+        reorder_response = response.json()
+        if not isinstance(reorder_response, list):
+            results.log_fail("Reorder Projects - Response Format", f"Expected list, got: {type(reorder_response)}")
+            return False
+        
+        # Step 5: Fetch projects from public endpoint
+        response = requests.get(f"{API_URL}/projects", timeout=10)
+        if response.status_code != 200:
+            results.log_fail("Reorder Projects - Get Public Projects", f"Status code: {response.status_code}")
+            return False
+        
+        public_projects = response.json()
+        
+        # Step 6: Verify the order has changed
+        new_order = [p['id'] for p in public_projects[:3]]
+        expected_order = [first_three[2]['id'], first_three[1]['id'], first_three[0]['id']]
+        
+        print(f"  Expected order: {expected_order}")
+        print(f"  New order: {new_order}")
+        
+        if new_order == expected_order:
+            results.log_pass("Reorder Projects - Order Changed")
+            return True
+        else:
+            results.log_fail("Reorder Projects - Order Verification", 
+                           f"Expected {expected_order}, got {new_order}")
+            return False
+            
+    except Exception as e:
+        results.log_fail("Reorder Projects", f"Error: {str(e)}")
+    return False
+
+def test_order_persistence(results, token):
+    """Test 13: Order Persistence"""
+    if not token:
+        results.log_fail("Order Persistence", "No authentication token available")
+        return False
+        
+    try:
+        import time
+        
+        headers = {"Authorization": f"Bearer {token}"}
+        
+        # Get current order from admin endpoint
+        response1 = requests.get(f"{API_URL}/admin/projects", headers=headers, timeout=10)
+        if response1.status_code != 200:
+            results.log_fail("Order Persistence - First Fetch", f"Status code: {response1.status_code}")
+            return False
+        
+        projects1 = response1.json()
+        order1 = [p['id'] for p in projects1[:3]]
+        
+        # Wait a few seconds
+        print("  Waiting 3 seconds to test persistence...")
+        time.sleep(3)
+        
+        # Fetch again from public endpoint
+        response2 = requests.get(f"{API_URL}/projects", timeout=10)
+        if response2.status_code != 200:
+            results.log_fail("Order Persistence - Second Fetch", f"Status code: {response2.status_code}")
+            return False
+        
+        projects2 = response2.json()
+        order2 = [p['id'] for p in projects2[:3]]
+        
+        print(f"  First fetch order: {order1}")
+        print(f"  Second fetch order: {order2}")
+        
+        if order1 == order2:
+            results.log_pass("Order Persistence - Order Maintained")
+            return True
+        else:
+            results.log_fail("Order Persistence", f"Order changed: {order1} -> {order2}")
+            return False
+            
+    except Exception as e:
+        results.log_fail("Order Persistence", f"Error: {str(e)}")
+    return False
+
 def main():
     print("🚀 Starting Photography Portfolio Backend API Tests")
     print(f"Backend URL: {BASE_URL}")
