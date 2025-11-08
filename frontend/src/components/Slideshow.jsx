@@ -29,6 +29,15 @@ const Slideshow = ({ media, projectInfo }) => {
     
     setCursorPosition({ x: e.clientX, y: e.clientY });
     
+    // Check if mouse is over video element
+    const target = e.target;
+    const isOverVideo = target.tagName === 'VIDEO' || target.closest('video');
+    
+    if (isOverVideo) {
+      setIsHovering(false);
+      return;
+    }
+    
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const containerWidth = rect.width;
