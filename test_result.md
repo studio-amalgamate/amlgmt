@@ -216,3 +216,5 @@ agent_communication:
     message: "Mobile layout updated with precise 100vh structure per user requirements: 15vh menu, 65vh slideshow, 5vh navigation buttons, 15vh project info. All layouts (desktop/tablet/mobile) verified via screenshots and working correctly."
   - agent: "main"
     message: "Implemented user-requested changes: 1) Added project drag-and-drop reordering in admin dashboard with grip icons. 2) Disabled dynamic cursor over video elements to allow video control access (images keep cursor navigation). 3) Updated mobile layout: 10vh menu, 70vh slideshow, 8vh navigation (removed counter), 12vh left-aligned project info. All features tested and working."
+  - agent: "testing"
+    message: "Project reordering API testing completed successfully. All 15 backend tests passed (13 existing + 2 new reordering tests). Verified: 1) PUT /api/projects/reorder endpoint works with proper authentication, 2) Projects can be reordered by swapping positions, 3) Order changes persist in database, 4) Both admin and public endpoints return projects in correct order. The reorder endpoint requires all projects to be included in the payload to avoid order conflicts."
