@@ -26,6 +26,9 @@ const Slideshow = ({ media, projectInfo }) => {
 
   const handleMouseMove = (e) => {
     if (isMobile) return;
+    
+    setCursorPosition({ x: e.clientX, y: e.clientY });
+    
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const containerWidth = rect.width;
