@@ -207,6 +207,9 @@ frontend:
       - working: true
         agent: "main"
         comment: "Mobile layout updated: menu (10vh), slideshow (70vh with video controls), navigation (8vh, counter removed), project info (12vh, left-aligned). Video cursor disabled for control access. Project drag-and-drop reordering added to dashboard with grip icons."
+      - working: true
+        agent: "main"
+        comment: "Complete About page redesign implemented per reference images. Desktop: 70vh black blur top + 30vh white bottom with 2-column layout. Mobile: vertical layout with close button. All content editable from admin settings (company_name, copyright_text, contact_email, contact_phone, about_paragraph)."
 
 metadata:
   created_by: "testing_agent"
