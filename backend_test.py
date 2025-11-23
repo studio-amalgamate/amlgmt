@@ -470,6 +470,108 @@ def test_order_persistence(results, token):
         results.log_fail("Order Persistence", f"Error: {str(e)}")
     return False
 
+def test_get_settings(results):
+    """Test 14: Get Current Settings"""
+    try:
+        response = requests.get(f"{API_URL}/settings", timeout=10)
+        
+        if response.status_code == 200:
+            data = response.json()
+            required_fields = ["company_name", "copyright_text", "contact_email", "contact_phone", "about_paragraph"]
+            
+            missing_fields = []
+            for field in required_fields:
+                if field not in data:
+                    missing_fields.append(field)
+            
+            if missing_fields:
+                results.log_fail("Get Settings", f"Missing required fields: {missing_fields}")
+                return None
+            else:
+                results.log_pass("Get Settings - All Required Fields Present")
+                print(f"  Current settings: company_name='{data['company_name']}', copyright_text='{data['copyright_text']}'")
+                print(f"  Contact: email='{data['contact_email']}', phone='{data['contact_phone']}'")
+                print(f"  About paragraph length: {len(data['about_paragraph'])} characters")
+                return data
+        else:
+            results.log_fail("Get Settings", f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        results.log_fail("Get Settings", f"Error: {str(e)}")
+    return None
+
+def test_update_settings(results, token):
+    """Test 15: Update About Page Settings"""
+    if not token:
+        results.log_fail("Update Settings", "No authentication token available")
+        return False
+        
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        settings_data = {
+            "company_name": "amalgamate",
+            "copyright_text": "© amalgamate",
+            "contact_email": "mail@amalgamate.studio",
+            "contact_phone": "+91-9987192152",
+            "about_paragraph": "We are a photography and creative direction studio crafting visual stories that move, inspire, and endure. Our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. From concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling."
+        }
+        
+        response = requests.put(f"{API_URL}/settings", json=settings_data, headers=headers, timeout=10)
+        
+        if response.status_code == 200:
+            data = response.json()
+            
+            # Verify all fields were updated correctly
+            all_correct = True
+            for key, expected_value in settings_data.items():
+                if data.get(key) != expected_value:
+                    results.log_fail("Update Settings", f"Field '{key}' not updated correctly. Expected: '{expected_value}', Got: '{data.get(key)}'")
+                    all_correct = False
+            
+            if all_correct:
+                results.log_pass("Update Settings - All Fields Updated Correctly")
+                return True
+            else:
+                return False
+        else:
+            results.log_fail("Update Settings", f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        results.log_fail("Update Settings", f"Error: {str(e)}")
+    return False
+
+def test_settings_persistence(results):
+    """Test 16: Verify Settings Persistence"""
+    try:
+        response = requests.get(f"{API_URL}/settings", timeout=10)
+        
+        if response.status_code == 200:
+            data = response.json()
+            
+            # Expected values from the update test
+            expected_values = {
+                "company_name": "amalgamate",
+                "copyright_text": "© amalgamate",
+                "contact_email": "mail@amalgamate.studio",
+                "contact_phone": "+91-9987192152",
+                "about_paragraph": "We are a photography and creative direction studio crafting visual stories that move, inspire, and endure. Our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. From concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling."
+            }
+            
+            all_persisted = True
+            for key, expected_value in expected_values.items():
+                if data.get(key) != expected_value:
+                    results.log_fail("Settings Persistence", f"Field '{key}' not persisted correctly. Expected: '{expected_value}', Got: '{data.get(key)}'")
+                    all_persisted = False
+            
+            if all_persisted:
+                results.log_pass("Settings Persistence - All Fields Saved Correctly")
+                return True
+            else:
+                return False
+        else:
+            results.log_fail("Settings Persistence", f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        results.log_fail("Settings Persistence", f"Error: {str(e)}")
+    return False
+
 def main():
     print("🚀 Starting Photography Portfolio Backend API Tests")
     print(f"Backend URL: {BASE_URL}")
