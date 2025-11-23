@@ -150,35 +150,6 @@ const Settings = () => {
             </div>
           </div>
 
-          {/* About Section */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-normal mb-4">About Page</h2>
-            
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="about_title">About Section Title</Label>
-                <Input
-                  id="about_title"
-                  value={formData.about_title}
-                  onChange={(e) => setFormData({ ...formData, about_title: e.target.value })}
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="about_content">About Content</Label>
-                <Textarea
-                  id="about_content"
-                  value={formData.about_content}
-                  onChange={(e) => setFormData({ ...formData, about_content: e.target.value })}
-                  rows={8}
-                  placeholder="Write your bio here..."
-                  className="mt-1"
-                />
-              </div>
-            </div>
-          </div>
-
           {/* Contact Section */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-2xl font-normal mb-4">Contact Information</h2>
@@ -220,28 +191,11 @@ const Settings = () => {
             </div>
           </div>
 
-          {/* Clients Section */}
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-normal mb-4">Select Clients</h2>
-            
-            <div>
-              <Label htmlFor="clients_list">Clients List (comma-separated)</Label>
-              <Textarea
-                id="clients_list"
-                value={formData.clients_list}
-                onChange={(e) => setFormData({ ...formData, clients_list: e.target.value })}
-                rows={3}
-                placeholder="Vogue India, GQ, Elle, Harper's Bazaar"
-                className="mt-1"
-              />
-            </div>
-          </div>
-
           {/* About Page Content Section */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-2xl font-normal mb-4">About Page Content</h2>
             <p className="text-sm text-gray-600 mb-4">
-              These fields control the new About popup page design
+              These fields control the About popup page
             </p>
             
             <div className="space-y-4">
@@ -252,17 +206,6 @@ const Settings = () => {
                   value={formData.company_name}
                   onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
                   placeholder="amalgamate"
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="copyright_text">Copyright Text</Label>
-                <Input
-                  id="copyright_text"
-                  value={formData.copyright_text}
-                  onChange={(e) => setFormData({ ...formData, copyright_text: e.target.value })}
-                  placeholder="© amalgamate"
                   className="mt-1"
                 />
               </div>
