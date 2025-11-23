@@ -48,6 +48,10 @@ const Settings = () => {
         contact_phone: data.contact_phone || '',
         instagram_url: data.instagram_url || '',
         clients_list: data.clients_list || '',
+        // New About page fields
+        company_name: data.company_name || 'amalgamate',
+        copyright_text: data.copyright_text || '© amalgamate',
+        about_paragraph: data.about_paragraph || '',
       });
     } catch (error) {
       console.error('Error loading settings:', error);
