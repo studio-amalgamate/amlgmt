@@ -39,15 +39,12 @@ const Settings = () => {
       setFormData({
         brand_name: data.brand_name || 'Your Name',
         logo_url: data.logo_url || '',
-        about_title: data.about_title || 'About',
-        about_content: data.about_content || '',
         contact_email: data.contact_email || '',
         contact_phone: data.contact_phone || '',
         instagram_url: data.instagram_url || '',
         clients_list: data.clients_list || '',
-        // New About page fields
+        // About page fields
         company_name: data.company_name || 'amalgamate',
-        copyright_text: data.copyright_text || '© amalgamate',
         about_paragraph: data.about_paragraph || '',
       });
     } catch (error) {
