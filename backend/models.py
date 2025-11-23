@@ -74,6 +74,10 @@ class SiteSettings(BaseModel):
     contact_phone: str = ""
     instagram_url: str = "https://instagram.com"
     clients_list: str = ""
+    # New About page fields
+    company_name: str = "amalgamate"
+    copyright_text: str = "© amalgamate"
+    about_paragraph: str = ""
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class SiteSettingsUpdate(BaseModel):
@@ -85,6 +89,10 @@ class SiteSettingsUpdate(BaseModel):
     contact_phone: Optional[str] = None
     instagram_url: Optional[str] = None
     clients_list: Optional[str] = None
+    # New About page fields
+    company_name: Optional[str] = None
+    copyright_text: Optional[str] = None
+    about_paragraph: Optional[str] = None
 
 class MediaReorder(BaseModel):
     media_order: List[dict]  # [{ id: str, order: int }]
