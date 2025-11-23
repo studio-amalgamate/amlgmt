@@ -143,21 +143,37 @@ const InfoModal = ({ isOpen, onClose }) => {
           {settings.company_name || 'amalgamate'}
         </h1>
 
-        {/* About section */}
-        <div className="space-y-3 mb-8">
-          <h2 className="text-xs uppercase tracking-wider text-black font-medium">
+        {/* About paragraph at top */}
+        <p className="text-black leading-relaxed mb-8" style={{ fontSize: '8px' }}>
+          {settings.about_paragraph || 
+            'We are a photography and creative direction studio crafting visual stories that move, inspire, and endure. Our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. From concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling.'}
+        </p>
+
+        {/* About us label at bottom with line */}
+        <div className="mb-4">
+          <hr className="border-t border-black mb-2" style={{ opacity: 0.3 }} />
+          <div className="text-black uppercase tracking-wider font-medium" style={{ fontSize: '8px' }}>
             About us
-          </h2>
-          <p className="text-sm leading-relaxed text-black">
-            {settings.about_paragraph || 
-              'We are a photography and creative direction studio crafting visual stories that move, inspire, and endure. Our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. From concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling.'}
-          </p>
+          </div>
         </div>
 
         {/* Footer */}
-        <div className="space-y-2 text-xs text-black">
-          <div className="flex justify-between">
-            <div>{settings.copyright_text || '© amalgamate'}</div>
+        <div className="text-black" style={{ fontSize: '8px' }}>
+          <div className="flex justify-between mb-1">
+            <div>
+              {settings.instagram_url ? (
+                <a 
+                  href={settings.instagram_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:opacity-70 transition-opacity"
+                >
+                  Instagram
+                </a>
+              ) : (
+                'Instagram'
+              )}
+            </div>
             <div className="text-right">{settings.contact_phone || '+91-9987192152'}</div>
           </div>
           <div className="text-right">{settings.contact_email || 'mail@amalgamate.studio'}</div>
