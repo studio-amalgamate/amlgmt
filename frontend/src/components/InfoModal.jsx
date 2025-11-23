@@ -59,10 +59,23 @@ const InfoModal = ({ isOpen, onClose }) => {
               </h1>
 
               {/* Footer at bottom */}
-              <div className="flex justify-between text-sm text-black">
-                <div>{settings.copyright_text || '© amalgamate'}</div>
-                <div className="flex gap-8">
-                  <div>{settings.contact_email || 'mail@amalgamate.studio'}</div>
+              <div className="flex justify-between items-center text-black" style={{ fontSize: '8px' }}>
+                <div>
+                  {settings.instagram_url ? (
+                    <a 
+                      href={settings.instagram_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="hover:opacity-70 transition-opacity"
+                    >
+                      Instagram
+                    </a>
+                  ) : (
+                    'Instagram'
+                  )}
+                </div>
+                <div className="flex" style={{ gap: '150%' }}>
+                  <div style={{ marginRight: '4vw' }}>{settings.contact_email || 'mail@amalgamate.studio'}</div>
                   <div>{settings.contact_phone || '+91-9987192152'}</div>
                 </div>
               </div>
@@ -74,15 +87,19 @@ const InfoModal = ({ isOpen, onClose }) => {
               <div className="w-1/2" />
 
               {/* Right sub-column - content - 50% */}
-              <div className="w-1/2 flex flex-col justify-center pr-12">
-                <div className="space-y-4">
-                  <h2 className="text-sm uppercase tracking-wider text-black font-medium">
+              <div className="w-1/2 flex flex-col justify-between pr-12 py-8">
+                {/* Paragraph at top (same margin as company name) */}
+                <p className="text-black text-justify leading-relaxed" style={{ fontSize: '8px' }}>
+                  {settings.about_paragraph || 
+                    'We are a photography and creative direction studio crafting visual stories that move, inspire, and endure. Our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. From concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling.'}
+                </p>
+
+                {/* About us label at bottom with line above */}
+                <div>
+                  <hr className="border-t border-black mb-2" style={{ opacity: 0.3 }} />
+                  <div className="text-black uppercase tracking-wider font-medium" style={{ fontSize: '8px' }}>
                     About us
-                  </h2>
-                  <p className="text-sm leading-relaxed text-black text-justify">
-                    {settings.about_paragraph || 
-                      'We are a photography and creative direction studio crafting visual stories that move, inspire, and endure. Our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. From concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling.'}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
