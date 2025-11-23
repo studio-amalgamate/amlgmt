@@ -216,7 +216,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Project Reordering API Testing Complete"
+    - "About Page Settings API Testing Complete"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
