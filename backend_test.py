@@ -621,6 +621,15 @@ def main():
     # Test 13: Order Persistence
     test_order_persistence(results, token)
     
+    # Test 14: Get Current Settings
+    test_get_settings(results)
+    
+    # Test 15: Update About Page Settings
+    test_update_settings(results, token)
+    
+    # Test 16: Verify Settings Persistence
+    test_settings_persistence(results)
+    
     # Final Summary
     success = results.summary()
     return success
