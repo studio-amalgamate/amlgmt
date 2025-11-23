@@ -191,6 +191,23 @@ const Settings = () => {
             </div>
           </div>
 
+          {/* Clients Section */}
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-2xl font-normal mb-4">Select Clients</h2>
+            
+            <div>
+              <Label htmlFor="clients_list">Clients List (comma-separated)</Label>
+              <Textarea
+                id="clients_list"
+                value={formData.clients_list}
+                onChange={(e) => setFormData({ ...formData, clients_list: e.target.value })}
+                rows={3}
+                placeholder="Vogue India, GQ, Elle, Harper's Bazaar"
+                className="mt-1"
+              />
+            </div>
+          </div>
+
           {/* About Page Content Section */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-2xl font-normal mb-4">About Page Content</h2>
