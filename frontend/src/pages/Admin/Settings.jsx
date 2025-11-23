@@ -16,15 +16,12 @@ const Settings = () => {
   const [formData, setFormData] = useState({
     brand_name: 'Your Name',
     logo_url: '',
-    about_title: 'About',
-    about_content: '',
     contact_email: '',
     contact_phone: '',
     instagram_url: '',
     clients_list: '',
-    // New About page fields
+    // About page fields
     company_name: 'amalgamate',
-    copyright_text: '© amalgamate',
     about_paragraph: '',
   });
 
