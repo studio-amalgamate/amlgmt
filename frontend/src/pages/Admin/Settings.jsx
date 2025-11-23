@@ -243,6 +243,50 @@ const Settings = () => {
             </div>
           </div>
 
+          {/* About Page Content Section */}
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-2xl font-normal mb-4">About Page Content</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              These fields control the new About popup page design
+            </p>
+            
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="company_name">Company Name</Label>
+                <Input
+                  id="company_name"
+                  value={formData.company_name}
+                  onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
+                  placeholder="amalgamate"
+                  className="mt-1"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="copyright_text">Copyright Text</Label>
+                <Input
+                  id="copyright_text"
+                  value={formData.copyright_text}
+                  onChange={(e) => setFormData({ ...formData, copyright_text: e.target.value })}
+                  placeholder="© amalgamate"
+                  className="mt-1"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="about_paragraph">About Paragraph</Label>
+                <Textarea
+                  id="about_paragraph"
+                  value={formData.about_paragraph}
+                  onChange={(e) => setFormData({ ...formData, about_paragraph: e.target.value })}
+                  rows={8}
+                  placeholder="We are a photography and creative direction studio..."
+                  className="mt-1"
+                />
+              </div>
+            </div>
+          </div>
+
           <Button type="submit" disabled={saving} size="lg">
             {saving ? 'Saving...' : 'Save Settings'}
           </Button>
