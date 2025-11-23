@@ -22,6 +22,10 @@ const Settings = () => {
     contact_phone: '',
     instagram_url: '',
     clients_list: '',
+    // New About page fields
+    company_name: 'amalgamate',
+    copyright_text: '© amalgamate',
+    about_paragraph: '',
   });
 
   useEffect(() => {
