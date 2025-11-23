@@ -177,6 +177,18 @@ backend:
         agent: "testing"
         comment: "Project reordering functionality fully working. PUT /api/projects/reorder endpoint successfully reorders projects. Tested with admin authentication, verified order changes are reflected in both admin (/api/admin/projects) and public (/api/projects) endpoints. Order persistence confirmed - projects maintain their order after multiple fetches. All 15 backend tests passed including the new reordering tests."
 
+  - task: "About Page Settings API"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "About page settings functionality fully working. GET /api/settings returns all required fields (company_name, copyright_text, contact_email, contact_phone, about_paragraph). PUT /api/settings successfully updates all fields with proper authentication. Settings persistence verified - all updated values are correctly saved and retrieved. All 18 backend tests passed including the new settings tests."
+
 frontend:
   - task: "Frontend Integration"
     implemented: true
