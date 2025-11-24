@@ -152,14 +152,6 @@ const InfoModal = ({ isOpen, onClose }) => {
             'we are a photography and creative direction studio crafting visual stories that move, inspire, and endure. our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. from concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling.'}
         </p>
 
-        {/* About us label with line - p1 (mobile size 14px) */}
-        <div className="mb-4">
-          <hr className="border-t border-black mb-2" style={{ opacity: 0.3 }} />
-          <div className="p1">
-            about us
-          </div>
-        </div>
-
         {/* Footer - p2 (mobile size 14px italic) */}
         <div className="p2 flex justify-between items-center">
           <div>
