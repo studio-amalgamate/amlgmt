@@ -167,10 +167,10 @@ const Slideshow = ({ media, projectInfo }) => {
           >
             {projectInfo ? (
               <div className="text-charcoal text-left">
-                <h2 className="text-base font-normal mb-1">
+                <h2 className="h3 lowercase mb-1">
                   {projectInfo.title}
                 </h2>
-                <p className="text-xs opacity-70">
+                <p className="p1 lowercase opacity-70">
                   {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
                 </p>
               </div>
