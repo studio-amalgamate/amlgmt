@@ -34,39 +34,39 @@ const InfoModal = ({ isOpen, onClose }) => {
         className="fixed inset-0 z-50"
         onClick={onClose}
       >
-        {/* Top 70vh - Black with 90% opacity and blur */}
+        {/* Top 60vh - Black with 90% opacity and blur */}
         <div 
           className="absolute top-0 left-0 right-0"
           style={{
-            height: '70vh',
+            height: '60vh',
             backgroundColor: 'rgba(0, 0, 0, 0.9)',
             backdropFilter: 'blur(12px)',
           }}
         />
 
-        {/* Bottom 30vh - White */}
+        {/* Bottom 40vh - White */}
         <div 
           className="absolute bottom-0 left-0 right-0 bg-white"
-          style={{ height: '30vh' }}
+          style={{ height: '40vh' }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="h-full flex">
+          <div className="h-full flex" style={{ margin: '40px 0' }}>
             {/* Left Column - 50% */}
-            <div className="w-1/2 h-full flex flex-col justify-between px-12 py-8">
+            <div className="w-1/2 h-full flex flex-col justify-between px-12">
               {/* Company name at top - h1 */}
-              <h1 className="h1 lowercase text-black" style={{ marginTop: '2rem' }}>
+              <h1 className="h1">
                 {settings.company_name || 'amalgamate'}
               </h1>
 
-              {/* Footer at bottom - p1 */}
-              <div className="flex justify-between items-center text-black p1">
+              {/* Footer at bottom - p2 */}
+              <div className="flex justify-between items-center p2">
                 <div>
                   {settings.instagram_url ? (
                     <a 
                       href={settings.instagram_url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="hover:opacity-70 transition-opacity lowercase"
+                      className="hover:opacity-70 transition-opacity"
                     >
                       instagram
                     </a>
@@ -75,8 +75,8 @@ const InfoModal = ({ isOpen, onClose }) => {
                   )}
                 </div>
                 <div className="flex items-center" style={{ gap: '8vw' }}>
-                  <div className="lowercase">{settings.contact_email || 'mail@amalgamate.studio'}</div>
-                  <div className="lowercase">{settings.contact_phone || '+91-9987192152'}</div>
+                  <div>{settings.contact_email || 'mail@amalgamate.studio'}</div>
+                  <div>{settings.contact_phone || '+91-9987192152'}</div>
                 </div>
               </div>
             </div>
@@ -87,10 +87,10 @@ const InfoModal = ({ isOpen, onClose }) => {
               <div className="w-1/2" />
 
               {/* Right sub-column - content - 50% */}
-              <div className="w-1/2 flex flex-col justify-between pr-12 py-8">
-                {/* Paragraph at top (same margin as company name) - p1 */}
-                <div style={{ marginTop: '2rem' }}>
-                  <p className="text-black p1 lowercase" style={{ textAlign: 'justify', lineHeight: '1.8' }}>
+              <div className="w-1/2 flex flex-col justify-between pr-12">
+                {/* Paragraph at top - p1 */}
+                <div>
+                  <p className="p1" style={{ textAlign: 'justify' }}>
                     {settings.about_paragraph || 
                       'we are a photography and creative direction studio crafting visual stories that move, inspire, and endure. our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. from concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling.'}
                   </p>
@@ -99,7 +99,7 @@ const InfoModal = ({ isOpen, onClose }) => {
                 {/* About us label at bottom with line - p1 */}
                 <div>
                   <hr className="border-t border-black mb-3" style={{ opacity: 0.3 }} />
-                  <div className="text-black p1 lowercase">
+                  <div className="p1">
                     about us
                   </div>
                 </div>
