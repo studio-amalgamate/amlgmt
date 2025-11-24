@@ -57,7 +57,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
               className="h-8 object-contain"
             />
           ) : (
-            <h1 className="text-xl font-normal tracking-wide uppercase">
+            <h1 className="h3 lowercase">
               {settings.brand_name}
             </h1>
           )}
