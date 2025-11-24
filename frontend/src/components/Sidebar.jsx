@@ -216,7 +216,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                     to={`/project/${project.id}`}
                     onClick={handleProjectClick}
                     className={
-                      `block h4 transition-opacity duration-200 ${
+                      `block h5 transition-opacity duration-200 ${
                         location.pathname === `/project/${project.id}`
                           ? 'opacity-100'
                           : 'opacity-50 hover:opacity-100'
