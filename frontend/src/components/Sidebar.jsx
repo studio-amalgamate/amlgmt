@@ -134,7 +134,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                 className="h-10 object-contain"
               />
             ) : (
-              <h1 className="text-lg font-normal tracking-wide uppercase">
+              <h1 className="h3 lowercase">
                 {settings.brand_name}
               </h1>
             )}
@@ -143,14 +143,15 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           <nav className="space-y-2 flex-grow">
             <button
               onClick={handleInfoClick}
-              className="block text-xs font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
+              className="block p1 lowercase opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
+              style={{ fontSize: '14px' }}
             >
-              ABOUT
+              about
             </button>
 
             <div className="group relative">
-              <div className="text-xs font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-2">
-                WORK
+              <div className="p1 lowercase opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-2" style={{ fontSize: '14px' }}>
+                work
               </div>
               
               <div className="hidden group-hover:block space-y-1">
@@ -159,14 +160,15 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                     key={project.id}
                     to={`/project/${project.id}`}
                     className={
-                      `block text-xs font-normal tracking-wide transition-opacity duration-200 ${
+                      `block p1 lowercase transition-opacity duration-200 ${
                         location.pathname === `/project/${project.id}`
                           ? 'opacity-100'
                           : 'opacity-50 hover:opacity-100'
                       }`
                     }
+                    style={{ fontSize: '14px' }}
                   >
-                    {project.title.toUpperCase()}
+                    {project.title}
                   </Link>
                 ))}
               </div>
