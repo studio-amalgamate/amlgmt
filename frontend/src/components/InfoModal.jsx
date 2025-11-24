@@ -117,10 +117,11 @@ const InfoModal = ({ isOpen, onClose }) => {
       className="fixed inset-0 z-50 flex flex-col"
       style={{ height: '100vh', width: '100vw' }}
     >
-      {/* Top section - Black with 90% opacity and blur + close button */}
+      {/* Top section - 50vh - Black with 90% opacity and blur + close button */}
       <div 
-        className="relative flex-1"
+        className="relative"
         style={{
+          height: '50vh',
           backgroundColor: 'rgba(0, 0, 0, 0.9)',
           backdropFilter: 'blur(12px)',
         }}
@@ -135,50 +136,52 @@ const InfoModal = ({ isOpen, onClose }) => {
         </button>
       </div>
 
-      {/* Bottom section - White with content */}
+      {/* Bottom section - 50vh - White with content */}
       <div 
-        className="bg-white px-6 py-8 flex flex-col justify-between"
-        style={{ minHeight: '40vh' }}
+        className="bg-white flex flex-col justify-between"
+        style={{ height: '50vh', padding: '40px 24px' }}
       >
-        {/* Company name - h1 (mobile size) */}
-        <h1 className="h1 lowercase text-black mb-6">
+        {/* Company name - h1 (mobile size 60px) */}
+        <h1 className="h1">
           {settings.company_name || 'amalgamate'}
         </h1>
 
-        {/* About paragraph at top - p1 (mobile size) */}
-        <p className="text-black p1 lowercase mb-6" style={{ lineHeight: '1.8' }}>
+        {/* About paragraph - p1 (mobile size 14px) */}
+        <p className="p1" style={{ flex: 1, marginTop: '20px', marginBottom: '20px' }}>
           {settings.about_paragraph || 
             'we are a photography and creative direction studio crafting visual stories that move, inspire, and endure. our work spans photography, film, and print, blending fine art sensibility with a contemporary edge. from concept to execution, we collaborate closely with designers, artists, and individuals to create imagery that feels timeless and emotional and is guided by a deep respect for light, composition and story telling.'}
         </p>
 
-        {/* About us label at bottom with line - p1 (mobile size) */}
+        {/* About us label with line - p1 (mobile size 14px) */}
         <div className="mb-4">
           <hr className="border-t border-black mb-2" style={{ opacity: 0.3 }} />
-          <div className="text-black p1 lowercase">
+          <div className="p1">
             about us
           </div>
         </div>
 
-        {/* Footer - p1 (mobile size) */}
-        <div className="text-black p1">
-          <div className="flex justify-between mb-1 lowercase">
-            <div>
-              {settings.instagram_url ? (
-                <a 
-                  href={settings.instagram_url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:opacity-70 transition-opacity"
-                >
-                  instagram
-                </a>
-              ) : (
-                'instagram'
-              )}
-            </div>
-            <div className="text-right">{settings.contact_phone || '+91-9987192152'}</div>
+        {/* Footer - p2 (mobile size 14px italic) */}
+        <div className="p2 flex justify-between items-center">
+          <div>
+            {settings.instagram_url ? (
+              <a 
+                href={settings.instagram_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:opacity-70 transition-opacity"
+              >
+                instagram
+              </a>
+            ) : (
+              'instagram'
+            )}
           </div>
-          <div className="text-right lowercase">{settings.contact_email || 'mail@amalgamate.studio'}</div>
+          <div className="text-center">
+            {settings.contact_email || 'mail@amalgamate.studio'}
+          </div>
+          <div className="text-right">
+            {settings.contact_phone || '+91-9987192152'}
+          </div>
         </div>
       </div>
     </div>
