@@ -104,3 +104,7 @@ backend/uploads/20251110_050054_b4f72fb2.mov
 # Environment files
 *.env
 *.env.*
+-e 
+# Environment files
+*.env
+*.env.*
