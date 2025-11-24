@@ -82,7 +82,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                 className="h-12 object-contain"
               />
             ) : (
-              <h1 className="h3 lowercase">
+              <h1 className="h2">
                 {settings.brand_name}
               </h1>
             )}
@@ -91,13 +91,13 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           <nav className="space-y-3 flex-grow">
             <button
               onClick={handleInfoClick}
-              className="block p1 lowercase opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
+              className="block h3 opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
             >
               about
             </button>
 
             <div className="group relative">
-              <div className="p1 lowercase opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-3">
+              <div className="h3 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-3">
                 work
               </div>
               
@@ -107,7 +107,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                     key={project.id}
                     to={`/project/${project.id}`}
                     className={
-                      `block p1 lowercase transition-opacity duration-200 ${
+                      `block h3 transition-opacity duration-200 ${
                         location.pathname === `/project/${project.id}`
                           ? 'opacity-100'
                           : 'opacity-50 hover:opacity-100'
