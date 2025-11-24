@@ -143,13 +143,13 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           <nav className="space-y-2 flex-grow">
             <button
               onClick={handleInfoClick}
-              className="block h3 opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
+              className="block h4 opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
             >
               about
             </button>
 
             <div className="group relative">
-              <div className="h3 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-2">
+              <div className="h4 opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-2">
                 work
               </div>
               
@@ -159,7 +159,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                     key={project.id}
                     to={`/project/${project.id}`}
                     className={
-                      `block h3 transition-opacity duration-200 ${
+                      `block h4 transition-opacity duration-200 ${
                         location.pathname === `/project/${project.id}`
                           ? 'opacity-100'
                           : 'opacity-50 hover:opacity-100'
