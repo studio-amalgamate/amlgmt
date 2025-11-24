@@ -47,12 +47,12 @@ const InfoModal = ({ isOpen, onClose }) => {
         {/* Bottom 40vh - White */}
         <div 
           className="absolute bottom-0 left-0 right-0 bg-white"
-          style={{ height: '40vh' }}
+          style={{ height: '40vh', padding: '40px 0' }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="h-full flex" style={{ margin: '40px 0' }}>
+          <div className="h-full flex px-12">
             {/* Left Column - 50% */}
-            <div className="w-1/2 h-full flex flex-col justify-between px-12">
+            <div className="w-1/2 h-full flex flex-col justify-between">
               {/* Company name at top - h1 */}
               <h1 className="h1">
                 {settings.company_name || 'amalgamate'}
