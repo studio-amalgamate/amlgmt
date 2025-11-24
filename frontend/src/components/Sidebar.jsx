@@ -57,7 +57,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
               className="h-8 object-contain"
             />
           ) : (
-            <h1 className="h3 lowercase">
+            <h1 className="h2">
               {settings.brand_name}
             </h1>
           )}
