@@ -195,7 +195,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                 className="h-8 object-contain"
               />
             ) : (
-              <h1 className="text-xl font-normal tracking-wide uppercase">
+              <h1 className="h3 lowercase">
                 {settings.brand_name}
               </h1>
             )}
@@ -218,14 +218,14 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                     to={`/project/${project.id}`}
                     onClick={handleProjectClick}
                     className={
-                      `block text-lg font-normal tracking-wide transition-opacity duration-200 ${
+                      `block p1 lowercase transition-opacity duration-200 ${
                         location.pathname === `/project/${project.id}`
                           ? 'opacity-100'
                           : 'opacity-50 hover:opacity-100'
                       }`
                     }
                   >
-                    {project.title.toUpperCase()}
+                    {project.title}
                   </Link>
                 ))}
               </nav>
@@ -235,9 +235,9 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
             <div className="pt-8 mt-8">
               <button
                 onClick={handleInfoClick}
-                className="block text-lg font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
+                className="block p1 lowercase opacity-50 hover:opacity-100 transition-opacity duration-200 text-left"
               >
-                ABOUT
+                about
               </button>
             </div>
           </div>
