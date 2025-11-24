@@ -11,7 +11,6 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-transform: lowercase;
 }
 
 code {
@@ -25,6 +24,7 @@ code {
     font-size: 120px;
     font-weight: 700;
     line-height: 1.2;
+    text-transform: lowercase;
 }
 
 .h2 {
@@ -32,6 +32,7 @@ code {
     font-size: 32px;
     font-weight: 400;
     line-height: 1.4;
+    text-transform: lowercase;
 }
 
 .h3 {
@@ -39,6 +40,7 @@ code {
     font-size: 28px;
     font-weight: 400;
     line-height: 1.4;
+    text-transform: lowercase;
 }
 
 .p1 {
@@ -46,6 +48,7 @@ code {
     font-size: 18px;
     font-weight: 400;
     line-height: 1.6;
+    text-transform: lowercase;
 }
 
 .p2 {
@@ -54,6 +57,7 @@ code {
     font-weight: 400;
     font-style: italic;
     line-height: 1.6;
+    text-transform: lowercase;
 }
 
 /* Mobile Typography */
