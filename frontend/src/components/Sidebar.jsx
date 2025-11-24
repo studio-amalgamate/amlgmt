@@ -82,7 +82,7 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                 className="h-12 object-contain"
               />
             ) : (
-              <h1 className="text-xl font-normal tracking-wide uppercase">
+              <h1 className="h3 lowercase">
                 {settings.brand_name}
               </h1>
             )}
@@ -91,14 +91,14 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
           <nav className="space-y-3 flex-grow">
             <button
               onClick={handleInfoClick}
-              className="block text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
+              className="block p1 lowercase opacity-50 hover:opacity-100 transition-opacity duration-200 text-left w-full"
             >
-              ABOUT
+              about
             </button>
 
             <div className="group relative">
-              <div className="text-sm font-normal tracking-wide opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-3">
-                WORK
+              <div className="p1 lowercase opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-default mb-3">
+                work
               </div>
               
               <div className="hidden group-hover:block space-y-2">
@@ -107,14 +107,14 @@ const Sidebar = ({ onInfoClick, isMobileMenuOpen, setIsMobileMenuOpen }) => {
                     key={project.id}
                     to={`/project/${project.id}`}
                     className={
-                      `block text-sm font-normal tracking-wide transition-opacity duration-200 ${
+                      `block p1 lowercase transition-opacity duration-200 ${
                         location.pathname === `/project/${project.id}`
                           ? 'opacity-100'
                           : 'opacity-50 hover:opacity-100'
                       }`
                     }
                   >
-                    {project.title.toUpperCase()}
+                    {project.title}
                   </Link>
                 ))}
               </div>
