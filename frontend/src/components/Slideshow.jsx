@@ -184,10 +184,10 @@ const Slideshow = ({ media, projectInfo }) => {
           {projectInfo && (
             <div className="hidden xl:flex items-end bg-white fixed" style={{ width: '15vw', left: '15vw', height: '100vh', padding: '2.5vw 0 2.5vw 2.5vw', zIndex: 30 }}>
               <div className="text-charcoal">
-                <h2 className="h2 lowercase mb-2">
+                <h2 className="h3 mb-2">
                   {projectInfo.title}
                 </h2>
-                <p className="p1 lowercase opacity-70">
+                <p className="p2 opacity-70">
                   {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
                 </p>
               </div>
@@ -198,10 +198,10 @@ const Slideshow = ({ media, projectInfo }) => {
           {projectInfo && (
             <div className="hidden lg:flex xl:hidden items-end bg-white fixed" style={{ width: '25vw', left: '15vw', height: '100vh', padding: '1.5vw 0 1.5vw 1.5vw', zIndex: 30 }}>
               <div className="text-charcoal">
-                <h2 className="h3 lowercase mb-2">
+                <h2 className="h3 mb-2">
                   {projectInfo.title}
                 </h2>
-                <p className="p1 lowercase opacity-70" style={{ fontSize: '14px' }}>
+                <p className="p2 opacity-70">
                   {projectInfo.client} / {projectInfo.date} / {projectInfo.location}
                 </p>
               </div>
