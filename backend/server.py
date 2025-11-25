@@ -447,23 +447,11 @@ async def health_check():
 # Include the router in the main app
 app.include_router(api_router)
 
-import re
-
-# Define allowed origins with regex support
-def is_allowed_origin(origin: str) -> bool:
-    allowed_patterns = [
-        r"^http://localhost:3000$",
-        r"^https://amlgmt\.vercel\.app$",
-        r"^https://.*\.vercel\.app$",  # All Vercel preview deployments
-        r"^https://amlgmt-production\.up\.railway\.app$",
-    ]
-    return any(re.match(pattern, origin) for pattern in allowed_patterns)
-
 # CORS middleware with origin validation
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origin_regex=r"https://.*\.vercel\.app",  # Allows all Vercel domains
+    allow_origin_regex=r"https://.*\.vercel\.app",  # Allows all Vercel preview/branch deployments
     allow_origins=[
         "http://localhost:3000",
         "https://amlgmt.vercel.app",
