@@ -47,7 +47,10 @@ class CORSStaticFiles(StaticFiles):
         response.headers["Cross-Origin-Resource-Policy"] = "cross-origin"
         return response
 
-app.mount("/api/uploads", CORSStaticFiles(directory="/app/backend/uploads"), name="uploads")
+# Mount uploads directory using relative path
+uploads_dir = Path(__file__).parent / "uploads"
+uploads_dir.mkdir(exist_ok=True, parents=True)
+app.mount("/api/uploads", CORSStaticFiles(directory=str(uploads_dir)), name="uploads")
 
 # Configure logging
 logging.basicConfig(
