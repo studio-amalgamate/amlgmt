@@ -96,3 +96,7 @@ android-sdk/
 *.env.*
 backend/uploads/20251108_074513_a327fa90.mp4
 backend/uploads/20251110_050054_b4f72fb2.mov
+-e 
+# Environment files
+*.env
+*.env.*
