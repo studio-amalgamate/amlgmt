@@ -453,19 +453,30 @@ async def health_check():
 # Include the router in the main app
 app.include_router(api_router)
 
-# CORS middleware with origin validation
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origin_regex=r"https://.*\.vercel\.app",  # Allows all Vercel preview/branch deployments
-    allow_origins=[
-        "http://localhost:3000",
-        "https://amlgmt.vercel.app",
-        "https://amlgmt-production.up.railway.app",
-    ],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# CORS middleware with dynamic origin configuration
+cors_origins = os.environ.get('CORS_ORIGINS', '*')
+if cors_origins == '*':
+    # Allow all origins (development/testing)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_credentials=True,
+        allow_origins=["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    print("[INFO] CORS: Allowing all origins (*)")
+else:
+    # Specific origins (production)
+    origins_list = [o.strip() for o in cors_origins.split(',')]
+    app.add_middleware(
+        CORSMiddleware,
+        allow_credentials=True,
+        allow_origin_regex=r"https://.*\.vercel\.app",  # Allows all Vercel deployments
+        allow_origins=origins_list,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    print(f"[INFO] CORS: Allowing specific origins: {origins_list}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
