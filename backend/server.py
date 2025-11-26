@@ -26,7 +26,10 @@ load_dotenv(ROOT_DIR / '.env')
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# Handle different DB_NAME variable formats
+db_name = os.environ.get('DB_NAME') or os.environ.get('db_name') or os.environ.get('db-name') or 'photography_portfolio'
+db = client[db_name]
+logger.info(f"Connected to database: {db_name}")
 
 # Collections
 users_collection = db.users
