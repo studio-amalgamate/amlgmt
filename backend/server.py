@@ -114,6 +114,10 @@ async def login(user: UserLogin):
 
 # ===== Project Routes =====
 
+@api_router.get("/")
+def root():
+    return {"status": "ok"}
+
 @api_router.get("/projects", response_model=List[Project])
 async def get_projects():
     # Only return published projects for public view, sorted by order field
