@@ -22,8 +22,10 @@ COPY . .
 # Create uploads directory
 RUN mkdir -p uploads
 
+RUN echo "PORT=$PORT"
+
 # Expose port (Railway will override this with $PORT)
-EXPOSE 8001
+EXPOSE 8000
 
 # Start command
-CMD uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001}
+CMD ["sh", "-c", "uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001}"]
